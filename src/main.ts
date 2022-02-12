@@ -5,6 +5,8 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'semantic-ui-css/semantic.min.css'
+//阿里巴巴矢量图标
+import '@/assets/css/icon/iconfont.css'
 //自定义全局css
 import '@/assets/css/base.less'
 
