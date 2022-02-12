@@ -2,6 +2,7 @@
 import { useStore } from 'vuex'
 import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { getSearchBlogList } from "@/api/blog";
 
 const props = defineProps({
   blogName: {
@@ -19,11 +20,10 @@ const store = useStore()
 
 const clientSize = computed(() => store.state.clientSize)
 
-const mobileHide = ref(true)
-const queryString = ref('')
-let queryResult = reactive([])
-const timer = ref(null)
-const navRef = ref(null)
+const mobileHide = ref<boolean>(true)
+const queryString = ref<string>('')
+let queryResult = reactive<object[]>([])
+const navRef = ref<any>(null)
 
 watch(
     () => route.path,
@@ -36,17 +36,17 @@ const toggle = () => {
   mobileHide.value = !mobileHide.value
 }
 
-const categoryRoute = (name) => {
-      router.push(`/category/${name}`)
+const categoryRoute = (name: string) => {
+  router.push(`/category/${name}`)
 }
 
-const debounceQuery = (queryString, callback) => {
-  timer.value && clearTimeout(timer.value)
-  timer.value = setTimeout(() => querySearchAsync(queryString, callback), 1000)
+const debounceQuery = (queryString: string, callback: (queryResult: object[]) => void) => {
+  // setTimeout(() => querySearchAsync(queryString, callback), 1000)
+  querySearchAsync(queryString, callback)
 }
 
-const querySearchAsync = (queryString, callback) => {
-  if (queryString == null
+const querySearchAsync = (queryString: string, callback: (queryResult: object[]) => void) => {
+  if (queryString === null
       || queryString.trim() === ''
       || queryString.indexOf('%') !== -1
       || queryString.indexOf('_') !== -1
@@ -57,37 +57,38 @@ const querySearchAsync = (queryString, callback) => {
     return
   }
 
-  queryResult = [
-    {id: 1, title: "111", content: "11223"},
-    {id: 2, title: "222", content: "长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试长度测试"},
-    {id: 3, title: "333", content: "22222"}
-  ]
+  // TODO
+  queryResult = getSearchBlogList(queryString)
   if (queryResult.length === 0) {
     queryResult.push({id: -1, title: '无相关搜索结果', content: ''})
   }
+
   callback(queryResult)
 }
 
-const handleSelect = (item) => {
-  if (item.id) {
-    router.push(`/blog/${item.id}`)
+const handleSelect = (item: { id: number }) => {
+  const { id } = item
+  if (id) {
+    router.push(`/blog/${id}`)
   }
 }
 
 const handleScrollListener = () => {
-  const { clientWidth, clientHeight } = clientSize.value
+  const {clientWidth, clientHeight} = clientSize.value
   //首页且不是移动端
   if (route.name === 'home' && clientWidth > 768) {
     if (window.scrollY > clientHeight / 2) {
       navRef.value.classList.remove('transparent')
     } else {
-      navRef.value.classList.add('transparent')
+      if (navRef.value !== null) {
+        navRef.value.classList.add('transparent')
+      }
     }
   }
 }
 
-const handleClickListener = (e) => {
-  let flag = e.path.some(item => {
+const handleClickListener = (e: any) => {
+  let flag = e.path.some((item: any) => {
     //判断是否是nav的点击事件
     if (item === navRef.value) {
       return true
