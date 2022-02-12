@@ -5,7 +5,7 @@ interface StateType {
 	}
 }
 
-const state = {
+const state: StateType = {
 	//可视窗口大小
 	clientSize: {
 		clientHeight: 0,
