@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
+import homeTop1 from 'assets/jpeg/homeTop1.png'
+import homeTop2 from 'assets/jpeg/homeTop2.png'
+import homeTop3 from 'assets/jpeg/homeTop3.png'
+import wave1 from 'assets/jpeg/wave1.png'
+import wave2 from 'assets/jpeg/wave2.png'
 
 const store = useStore()
 const props = defineProps({
@@ -43,7 +48,6 @@ watch(
 //根据可视窗口高度，动态改变首图大小
 const setHeaderHeight = () => {
   const { clientHeight } = clientSize.value
-  console.log(clientHeight)
   header.value.style.height = clientHeight + 'px'
 }
 //平滑滚动至正文部分
@@ -56,14 +60,10 @@ const scrollToMain = () => {
 <template>
   <header ref="header">
     <div class="view">
-      <img alt="" ref="imgBg" src="https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg" style="display: none;"/>
-      <div class="bg1"
-           style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg');"/>
-      <div class="bg2"
-           style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg2.jpg');"/>
-      <div class="bg3"
-           style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg3.jpg');"
-           v-show="loaded"/>
+      <img alt="" ref="imgBg" src="~@/assets/jpeg/homeTop2.png" style="display: none;"/>
+      <div class="bg1" :style="{backgroundImage: `url(${homeTop1})`}"/>
+      <div class="bg2" :style="{backgroundImage: `url(${homeTop2})`}"/>
+      <div class="bg3" :style="{backgroundImage: `url(${homeTop3})`}" v-show="loaded"/>
     </div>
     <div class="text-malfunction" :data-word="blogName">
       <div class="line"/>
@@ -71,8 +71,8 @@ const scrollToMain = () => {
     <div class="wrapper">
       <i class="iconfont icon-down-circle" @click="scrollToMain"></i>
     </div>
-    <div class="wave1"/>
-    <div class="wave2"/>
+    <div class="wave1" :style="{background: `url(${wave1}) repeat-x`}"/>
+    <div class="wave2" :style="{background: `url(${wave2}) repeat-x`}"/>
   </header>
 </template>
 
@@ -285,13 +285,11 @@ header.moving .bg2 {
 }
 
 .wave1 {
-  background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;
   height: 75px;
   width: 100%;
 }
 
 .wave2 {
-  background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;
   height: 90px;
   width: calc(100% + 100px);
   left: -100px;
