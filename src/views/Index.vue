@@ -1,5 +1,5 @@
-<script setup>
-import Nav from "@/components/index/Nav";
+<script setup lang="ts">
+import Nav from "@/components/index/Nav.vue";
 import {
   SAVE_CLIENT_SIZE,
 } from "@/store/mutations-types";

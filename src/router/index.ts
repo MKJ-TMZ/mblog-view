@@ -1,18 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const Index = () => import('@/views/Index')
-const Home = () => import('@/views/Home')
-
 const routes = [
   {
     path: '/',
-    component: Index,
+    component: () => import('@/views/Index.vue'),
     redirect: '/home',
     children: [
       {
         path: '/home',
         name: 'home',
-        component: Home,
+        component: () => import('@/views/Home.vue'),
         meta: {
           title: '首页'
         }

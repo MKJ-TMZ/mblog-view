@@ -1,16 +1,16 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import path from "path";
+import { resolve } from "path";
 
 export default defineConfig({
   server: {
-    port: 3000,
+    port: 3000
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src")
+      "@": resolve(__dirname, "src")
     },
-    extensions: ['.js', '.json', '.ts', '.vue']
+    extensions: ['.js', '.json', '.ts']
   },
   plugins: [vue()]
 })

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import state from "@/store/state";
+import { state } from "@/store/state";
 import mutations from "@/store/mutations";
 
 const store = createStore({
