@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import Nav from "@/components/index/Nav.vue";
+import Header from "@/components/index/Header.vue"
 import {
   SAVE_CLIENT_SIZE,
 } from "@/store/mutations-types";
 import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import { getSite } from "@/api";
+import { useRoute } from "vue-router";
 
+const route = useRoute()
 const store = useStore()
 
-let categoryList =  reactive<object[]>([])
-let siteInfo = ref<{ blogName: string }>({blogName: ''})
+const categoryList =  reactive<object[]>([])
+const siteInfo = ref<{ blogName: string }>({blogName: ''})
 
 onBeforeMount(() => {
   initSite()
@@ -42,9 +45,11 @@ onMounted(() => {
   <div class="site">
     <!--顶部导航-->
     <Nav :blogName="siteInfo.blogName" :categoryList="categoryList"/>
-
+    <!--首页大图-->
+    <div class="m-mobile-hide">
+      <Header :blogName="siteInfo.blogName" v-if="route.name==='home'"/>
+    </div>
     <div class="main" style="height: 2500px">
-      <router-view/>
     </div>
   </div>
 </template>
