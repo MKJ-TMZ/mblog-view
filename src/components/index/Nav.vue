@@ -4,6 +4,9 @@ import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getSearchBlogList } from "@/api/blog";
 
+const route = useRoute()
+const router = useRouter()
+const store = useStore()
 const props = defineProps({
   blogName: {
     type: String,
@@ -14,23 +17,31 @@ const props = defineProps({
     required: true
   },
 })
-const route = useRoute()
-const router = useRouter()
-const store = useStore()
-
-const clientSize = computed(() => store.state.clientSize)
 
 const mobileHide = ref<boolean>(true)
 const queryString = ref<string>('')
-let queryResult = reactive<object[]>([])
+const queryResult = ref<object[]>([])
 const navRef = ref<any>(null)
+const clientSize = computed(() => store.state.clientSize)
 
 watch(
-    () => route.path,
-    () => {
-      mobileHide.value = true
-    }
+  () => route.path,
+  () => {
+    mobileHide.value = true
+  }
 )
+
+onMounted(() => {
+  //监听页面滚动位置，改变导航栏的显示
+  window.addEventListener('scroll', handleScrollListener)
+  //监听点击事件，收起导航菜单
+  document.addEventListener('click', handleClickListener)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScrollListener)
+  document.removeEventListener('click', handleClickListener)
+})
 
 const toggle = () => {
   mobileHide.value = !mobileHide.value
@@ -40,12 +51,12 @@ const categoryRoute = (name: string) => {
   router.push(`/category/${name}`)
 }
 
-const debounceQuery = (queryString: string, callback: (queryResult: object[]) => void) => {
+const debounceQuery = (queryString: string, callback: (queryResult: unknown) => void) => {
   // setTimeout(() => querySearchAsync(queryString, callback), 1000)
   querySearchAsync(queryString, callback)
 }
 
-const querySearchAsync = (queryString: string, callback: (queryResult: object[]) => void) => {
+const querySearchAsync = (queryString: string, callback: (queryResult: unknown) => void) => {
   if (queryString === null
       || queryString.trim() === ''
       || queryString.indexOf('%') !== -1
@@ -58,9 +69,10 @@ const querySearchAsync = (queryString: string, callback: (queryResult: object[])
   }
 
   // TODO
-  queryResult = getSearchBlogList(queryString)
-  if (queryResult.length === 0) {
-    queryResult.push({id: -1, title: '无相关搜索结果', content: ''})
+  const searchBlogList = getSearchBlogList(queryString)
+  queryResult.value = searchBlogList
+  if (searchBlogList.length === 0) {
+    queryResult.value = [{id: -1, title: '无相关搜索结果', content: ''}]
   }
 
   callback(queryResult)
@@ -99,33 +111,21 @@ const handleClickListener = (e: any) => {
     mobileHide.value = true
   }
 }
-
-onMounted(() => {
-  //监听页面滚动位置，改变导航栏的显示
-  window.addEventListener('scroll', handleScrollListener)
-  //监听点击事件，收起导航菜单
-  document.addEventListener('click', handleClickListener)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScrollListener)
-  document.removeEventListener('click', handleClickListener)
-})
 </script>
 
 <template>
   <div ref="navRef" class="ui fixed inverted stackable pointing menu"
-       :class="{'transparent':$route.name==='home'}">
+       :class="{'transparent':route.name==='home'}">
     <div class="ui container">
       <router-link to="/">
         <h3 class="ui header item m-blue">{{ blogName }}</h3>
       </router-link>
-      <router-link to="/home" class="item" :class="{'m-mobile-hide': mobileHide, 'active': $route.name === 'home'}">
+      <router-link to="/home" class="item" :class="{'m-mobile-hide': mobileHide, 'active': route.name === 'home'}">
         <i class="home icon"/>首页
       </router-link>
       <el-dropdown popper-class="m-dropdown-popper" @command="categoryRoute">
 				<span class="el-dropdown-link item"
-              :class="{'m-mobile-hide': mobileHide, 'active': $route.name === 'category'}">
+              :class="{'m-mobile-hide': mobileHide, 'active': route.name === 'category'}">
 					<i class="idea icon"/>分类<i class="caret down icon"></i>
 				</span>
         <template #dropdown>
@@ -137,18 +137,18 @@ onUnmounted(() => {
         </template>
       </el-dropdown>
       <router-link to="/archives" class="item"
-                   :class="{'m-mobile-hide': mobileHide, 'active': $route.name === 'archives'}">
+                   :class="{'m-mobile-hide': mobileHide, 'active': route.name === 'archives'}">
         <i class="clone icon"/>归档
       </router-link>
       <router-link to="/moments" class="item"
-                   :class="{'m-mobile-hide': mobileHide, 'active': $route.name === 'moments'}">
+                   :class="{'m-mobile-hide': mobileHide, 'active': route.name === 'moments'}">
         <i class="comment alternate outline icon"/>动态
       </router-link>
       <router-link to="/friends" class="item"
-                   :class="{'m-mobile-hide': mobileHide, 'active': $route.name === 'friends'}">
+                   :class="{'m-mobile-hide': mobileHide, 'active': route.name === 'friends'}">
         <i class="users icon"/>友人帐
       </router-link>
-      <router-link to="/about" class="item" :class="{'m-mobile-hide': mobileHide, 'active': $route.name === 'about'}">
+      <router-link to="/about" class="item" :class="{'m-mobile-hide': mobileHide, 'active': route.name === 'about'}">
         <i class="info icon"/>关于我
       </router-link>
       <el-autocomplete
@@ -240,7 +240,8 @@ onUnmounted(() => {
 }
 
 .m-dropdown-popper {
-  top: 56px !important;
+  //top: 56px !important;
+  border: 0 !important;
 }
 
 .m-search {
