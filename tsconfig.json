@@ -3,7 +3,8 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "assets/*": ["src/assets/*"]
     },
     "target": "es6",
     "module": "esnext",
