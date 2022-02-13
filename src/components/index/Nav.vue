@@ -75,7 +75,7 @@ const querySearchAsync = (queryString: string, callback: (queryResult: unknown) 
     queryResult.value = [{id: -1, title: '无相关搜索结果', content: ''}]
   }
 
-  callback(queryResult)
+  callback(queryResult.value)
 }
 
 const handleSelect = (item: { id: number }) => {
