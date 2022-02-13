@@ -62,7 +62,7 @@ const scrollToMain = () => {
     <div class="view">
       <img alt="" ref="imgBg" src="~@/assets/jpeg/homeTop2.png" style="display: none;"/>
       <div class="bg1" :style="{backgroundImage: `url(${homeTop1})`}"/>
-      <div class="bg2" :style="{backgroundImage: `url(${homeTop2})`}"/>
+      <div class="bg2" :style="{backgroundImage: `url(${homeTop2})`}" v-show="loaded"/>
       <div class="bg3" :style="{backgroundImage: `url(${homeTop3})`}" v-show="loaded"/>
     </div>
     <div class="text-malfunction" :data-word="blogName">
