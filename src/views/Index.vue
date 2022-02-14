@@ -1,17 +1,21 @@
 <script setup lang="ts">
 import Nav from "@/components/index/Nav.vue";
 import Header from "@/components/index/Header.vue"
-import { SAVE_CLIENT_SIZE, } from "@/store/mutations-types";
-import { inject, onBeforeMount, onMounted, reactive, ref, watch } from "vue";
+import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, } from "@/store/mutations-types";
+import { inject, onBeforeMount, onMounted, reactive, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 import { getSite } from "@/api";
 import { useRoute } from "vue-router";
+import Introduction from "@/components/index/Introduction.vue";
+import RandomBlog from "@/components/sidebar/RandomBlog.vue";
 
 const route = useRoute()
 const store = useStore()
 
 const categoryList =  reactive<object[]>([])
 const siteInfo = ref<{ blogName: string }>({blogName: ''})
+const randomBlogList = ref<any[]>([])
+const focusMode = computed(() => store.state.focusMode)
 
 onBeforeMount(() => {
   initSite()
@@ -39,9 +43,11 @@ watch(
 
 const initSite = () => {
   // TODO
-  const date = getSite()
-  categoryList.push(...date.categoryList)
-  siteInfo.value = date.siteInfo
+  const data = getSite()
+  categoryList.push(...data.categoryList)
+  siteInfo.value = data.siteInfo
+  randomBlogList.value = data.randomBlogList
+  store.commit(SAVE_INTRODUCTION, data.introduction)
 }
 </script>
 
@@ -60,15 +66,17 @@ const initSite = () => {
           <div class="ui stackable grid">
             <!--左侧-->
             <div class="three wide column m-mobile-hide">
-
+              <Introduction :class="{'m-display-none': focusMode}"/>
             </div>
             <!--中间-->
             <div class="ten wide column">
-
+              <keep-alive include="Home">
+                <router-view/>
+              </keep-alive>
             </div>
             <!--右侧-->
             <div class="three wide column m-mobile-hide">
-
+              <RandomBlog :randomBlogList="randomBlogList" :class="{'m-display-none': focusMode}"/>
             </div>
           </div>
         </div>
@@ -93,5 +101,17 @@ const initSite = () => {
   width: 1400px !important;
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+.ui.grid .three.column {
+  padding: 0;
+}
+
+.ui.grid .ten.column {
+  padding-top: 0;
+}
+
+.m-display-none {
+  display: none !important;
 }
 </style>
