@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import homeTop1 from 'assets/jpeg/homeTop1.png'
-import homeTop2 from 'assets/jpeg/homeTop2.png'
-import homeTop3 from 'assets/jpeg/homeTop3.png'
-import wave1 from 'assets/jpeg/wave1.png'
-import wave2 from 'assets/jpeg/wave2.png'
+import homeTop1 from 'assets/img/homeTop1.png'
+import homeTop2 from 'assets/img/homeTop2.png'
+import homeTop3 from 'assets/img/homeTop3.png'
+import wave1 from 'assets/img/wave1.png'
+import wave2 from 'assets/img/wave2.png'
 
 const store = useStore()
 const props = defineProps({
@@ -60,7 +60,7 @@ const scrollToMain = () => {
 <template>
   <header ref="header">
     <div class="view">
-      <img alt="" ref="imgBg" src="~@/assets/jpeg/homeTop2.png" style="display: none;"/>
+      <img alt="" ref="imgBg" src="~@/assets/img/homeTop2.png" style="display: none;"/>
       <div class="bg1" :style="{backgroundImage: `url(${homeTop1})`}"/>
       <div class="bg2" :style="{backgroundImage: `url(${homeTop2})`}" v-show="loaded"/>
       <div class="bg3" :style="{backgroundImage: `url(${homeTop3})`}" v-show="loaded"/>
