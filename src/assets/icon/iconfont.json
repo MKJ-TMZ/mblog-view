@@ -6,11 +6,46 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "3506928",
+      "name": "qq",
+      "font_class": "qq",
+      "unicode": "e50b",
+      "unicode_decimal": 58635
+    },
+    {
       "icon_id": "4765729",
       "name": "down-circle",
       "font_class": "down-circle",
       "unicode": "e77f",
       "unicode_decimal": 59263
+    },
+    {
+      "icon_id": "5320797",
+      "name": "bangumi-icon",
+      "font_class": "bangumi-icon",
+      "unicode": "e520",
+      "unicode_decimal": 58656
+    },
+    {
+      "icon_id": "11983543",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "ea0b",
+      "unicode_decimal": 59915
+    },
+    {
+      "icon_id": "13303087",
+      "name": "email",
+      "font_class": "email",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "26267546",
+      "name": "bilibili",
+      "font_class": "bilibili",
+      "unicode": "e609",
+      "unicode_decimal": 58889
     }
   ]
 }
