@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, getCurrentInstance } from 'vue'
 import App from './App.vue'
 import router from "@/router";
 import store from './store'
@@ -7,9 +7,10 @@ import 'element-plus/dist/index.css'
 import 'semantic-ui-css/semantic.min.css'
 //阿里巴巴矢量图标
 import '@/assets/icon/iconfont.css'
+//typo.css
+import "@/assets/css/typo.css";
 //自定义全局css
 import '@/assets/css/base.less'
-import { getCurrentInstance } from "_vue@3.2.30@vue";
 
 console.log(
   '%c MTCode %c By MTCode %c https://mkj-tmz.github.io/',
