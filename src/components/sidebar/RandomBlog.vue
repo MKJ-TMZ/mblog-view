@@ -13,7 +13,7 @@ const props = defineProps({
 })
 
 const toBlog = (blog: any) => {
-  router.push(`/blog/${blog.id}`)
+  store.dispatch('goBlogPage', blog)
 }
 </script>
 
