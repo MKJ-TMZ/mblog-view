@@ -8,6 +8,7 @@ import { getSite } from "@/api";
 import { useRoute } from "vue-router";
 import Introduction from "@/components/index/Introduction.vue";
 import RandomBlog from "@/components/sidebar/RandomBlog.vue";
+import Tags from "@/components/sidebar/Tags.vue";
 
 const route = useRoute()
 const store = useStore()
@@ -16,6 +17,7 @@ const categoryList =  reactive<object[]>([])
 const siteInfo = ref<{ blogName: string }>({blogName: ''})
 const randomBlogList = ref<any[]>([])
 const focusMode = computed(() => store.state.focusMode)
+const tagList = ref<any[]>([])
 
 onBeforeMount(() => {
   initSite()
@@ -48,6 +50,7 @@ const initSite = () => {
   siteInfo.value = data.siteInfo
   randomBlogList.value = data.randomBlogList
   store.commit(SAVE_INTRODUCTION, data.introduction)
+  tagList.value = data.tagList
 }
 </script>
 
@@ -70,13 +73,16 @@ const initSite = () => {
             </div>
             <!--中间-->
             <div class="ten wide column">
-              <keep-alive include="Home">
-                <router-view/>
-              </keep-alive>
+              <router-view v-slot="{ Component }">
+                <keep-alive include="Home">
+                  <component :is="Component"/>
+                </keep-alive>
+              </router-view>
             </div>
             <!--右侧-->
             <div class="three wide column m-mobile-hide">
               <RandomBlog :randomBlogList="randomBlogList" :class="{'m-display-none': focusMode}"/>
+              <Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
             </div>
           </div>
         </div>

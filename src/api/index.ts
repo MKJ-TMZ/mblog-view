@@ -1,6 +1,6 @@
 export function getSite() {
-  return{
-    siteInfo: { blogName: `MTCode's blog` },
+  return {
+    siteInfo: {blogName: `MTCode's blog`},
     categoryList: [
       {name: '菜单1'},
       {name: '菜单2'},
@@ -47,6 +47,14 @@ export function getSite() {
         password: '',
         privacy: false,
         title: 'Hello',
+      }
+    ],
+    tagList: [
+      {
+        blogs: [],
+        color: "orange",
+        id: null,
+        name: "test"
       }
     ]
   }
