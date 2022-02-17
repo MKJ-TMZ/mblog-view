@@ -9,6 +9,7 @@ import { useRoute } from "vue-router";
 import Introduction from "@/components/index/Introduction.vue";
 import RandomBlog from "@/components/sidebar/RandomBlog.vue";
 import Tags from "@/components/sidebar/Tags.vue";
+import Tocbot from "@/components/sidebar/Tocbot.vue";
 
 const route = useRoute()
 const store = useStore()
@@ -83,11 +84,18 @@ const initSite = () => {
             <div class="three wide column m-mobile-hide">
               <RandomBlog :randomBlogList="randomBlogList" :class="{'m-display-none': focusMode}"/>
               <Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
+              <!--只在文章页面显示目录-->
+              <Tocbot v-if="route.name==='blog'"/>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!--回到顶部-->
+    <el-backtop style="box-shadow: none; background: none;">
+      <span title="回到顶部" class="iconfont icon-backtop" style="font-size: 40px"/>
+    </el-backtop>
   </div>
 </template>
 

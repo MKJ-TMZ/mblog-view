@@ -14,7 +14,8 @@ interface StateType {
 		bangumi: string,
 		qq: string,
 	},
-	focusMode: boolean
+	focusMode: boolean,
+	isBlogRenderComplete: boolean
 }
 
 const state: StateType = {
@@ -36,6 +37,8 @@ const state: StateType = {
 	},
 	//专注模式
 	focusMode: false,
+	//博客文章渲染完成的标记
+	isBlogRenderComplete: false,
 }
 
 export { state, StateType }
