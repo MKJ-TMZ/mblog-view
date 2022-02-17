@@ -5,11 +5,11 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'semantic-ui-css/semantic.min.css'
-//阿里巴巴矢量图标
+// 阿里巴巴矢量图标
 import '@/assets/icon/iconfont.css'
-//typo.css
+// typo.css
 import "@/assets/css/typo.css";
-//自定义全局css
+// 自定义全局css
 import '@/assets/css/base.less'
 
 console.log(
@@ -39,7 +39,7 @@ app.provide('msgInfo', msgInfo);
 
 const cubic = (value: number) => Math.pow(value, 3);
 const easeInOutCubic = (value: number) => value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2;
-//滚动至页面顶部，使用 ElementPlus 回到顶部 组件中的算法
+// 滚动至页面顶部，使用 ElementPlus 回到顶部 组件中的算法
 const scrollToTop = function () {
   const el = document.documentElement
   const beginTime = Date.now()

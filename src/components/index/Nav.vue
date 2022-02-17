@@ -32,9 +32,9 @@ watch(
 )
 
 onMounted(() => {
-  //监听页面滚动位置，改变导航栏的显示
+  // 监听页面滚动位置，改变导航栏的显示
   window.addEventListener('scroll', handleScrollListener)
-  //监听点击事件，收起导航菜单
+  // 监听点击事件，收起导航菜单
   document.addEventListener('click', handleClickListener)
 })
 
@@ -126,7 +126,7 @@ const handleClickListener = (e: any) => {
       <el-dropdown popper-class="m-dropdown-popper" @command="categoryRoute">
 				<span class="el-dropdown-link item"
               :class="{'m-mobile-hide': mobileHide, 'active': route.name === 'category'}">
-					<i class="idea icon"/>分类<i class="caret down icon"></i>
+					<i class="idea icon"/>分类<i class="caret down icon"/>
 				</span>
         <template #dropdown>
           <el-dropdown-menu>
