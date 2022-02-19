@@ -9,7 +9,7 @@ const routes = [
       {
         path: '/home',
         name: 'home',
-        component: () => import('@/views/Home.vue'),
+        component: () => import('@/views/home/Home.vue'),
         meta: {
           title: '首页'
         }
