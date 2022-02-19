@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, watch } from "vue";
 import { useStore } from "vuex";
 import 'tocbot/dist/tocbot.min'
