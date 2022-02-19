@@ -1,6 +1,19 @@
+import axios from "@/plugins/axios";
+
 export function getSite() {
   return {
-    siteInfo: {blogName: `MTCode's blog`},
+    siteInfo: {
+      blogName: `MTCode's blog`,
+      commentAdminFlag: false,
+      reward: "/img/reward.jpg",
+      copyright: {
+        title: "Copyright © 2021 - 2022",
+        siteName: "MTCode's Blog"
+      },
+      webTitleSuffix: " - MTCode's Blog",
+      footerImgTitle: "手机看本站",
+      footerImgUrl: "/img/qr.png"
+    },
     categoryList: [
       {name: '菜单1'},
       {name: '菜单2'},
@@ -56,6 +69,51 @@ export function getSite() {
         id: null,
         name: "test"
       }
-    ]
+    ],
+    badges: [
+      {
+        title: "由 Spring Boot 强力驱动",
+        url: "https://spring.io/projects/spring-boot/",
+        subject: "Powered",
+        value: "Spring Boot",
+        color: "blue"
+      },
+      {
+        title: "Vue.js 客户端渲染",
+        url: "https://cn.vuejs.org/",
+        subject: "SPA",
+        value: "Vue.js",
+        color: "brightgreen"
+      },
+      {
+        title: "UI 框架 Semantic-UI",
+        url: "https://semantic-ui.com/",
+        subject: "UI",
+        value: "Semantic-UI",
+        color: "semantic-ui"
+      },
+      {
+        title: "GitHub",
+        url: "https://github.com/",
+        subject: "OSS",
+        value: "GitHub",
+        color: "github"
+      },
+      {
+        title: "本站点采用 CC BY 4.0 国际许可协议进行许可",
+        url: "https://creativecommons.org/licenses/by/4.0/",
+        subject: "CC",
+        value: "BY 4.0",
+        color: "lightgray"
+      }
+    ],
+    newBlogList: []
   }
+}
+
+export function getHitokoto() {
+  return axios({
+    url: 'https://v1.hitokoto.cn/?c=d',
+    method: 'GET'
+  })
 }

@@ -31,7 +31,7 @@ onMounted(() => {
   })
   header.value.addEventListener('mouseout', (e: any) => {
     header.value.classList.remove('moving')
-    header.value.style.setProperty('--percentage', 0.5)
+    header.value.style.setProperty('--percentage', '0.5')
   })
   header.value.addEventListener('mousemove', (e: any) => {
     let percentage: number = (e.clientX - startingPoint) / window.outerWidth + 0.5

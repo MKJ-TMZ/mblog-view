@@ -4,12 +4,13 @@ import Header from "@/components/index/Header.vue"
 import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, } from "@/store/mutations-types";
 import { inject, onBeforeMount, onMounted, reactive, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
-import { getSite } from "@/api";
+import { getSite, getHitokoto } from "@/api";
 import { useRoute } from "vue-router";
-import Introduction from "@/components/index/Introduction.vue";
+import Introduction from "@/components/sidebar/Introduction.vue";
 import RandomBlog from "@/components/sidebar/RandomBlog.vue";
 import Tags from "@/components/sidebar/Tags.vue";
 import Tocbot from "@/components/sidebar/Tocbot.vue";
+import Footer from "@/components/index/Footer.vue";
 
 const route = useRoute()
 const store = useStore()
@@ -19,6 +20,9 @@ const siteInfo = ref<{ blogName: string }>({blogName: ''})
 const randomBlogList = ref<any[]>([])
 const focusMode = computed(() => store.state.focusMode)
 const tagList = ref<any[]>([])
+const badges = ref<any[]>([])
+const newBlogList = ref<any[]>([])
+const hitokoto = ref<any>({})
 
 onBeforeMount(() => {
   initSite()
@@ -52,7 +56,14 @@ const initSite = () => {
   randomBlogList.value = data.randomBlogList
   store.commit(SAVE_INTRODUCTION, data.introduction)
   tagList.value = data.tagList
+  badges.value = data.badges
+  newBlogList.value = data.newBlogList
 }
+
+  //获取一言
+  getHitokoto().then(res => {
+    hitokoto.value = res
+  })
 </script>
 
 <template>
@@ -64,6 +75,7 @@ const initSite = () => {
       <Header :blogName="siteInfo.blogName" v-if="route.name==='home'"/>
     </div>
 
+    <!--主体部分-->
     <div class="main">
       <div class="m-padded-tb-big">
         <div class="ui container">
@@ -96,6 +108,9 @@ const initSite = () => {
     <el-backtop style="box-shadow: none; background: none;">
       <span title="回到顶部" class="iconfont icon-backtop" style="font-size: 40px"/>
     </el-backtop>
+
+    <!--底部-->
+    <Footer :siteInfo="siteInfo" :badges="badges" :newBlogList="newBlogList" :hitokoto="hitokoto"/>
   </div>
 </template>
 
