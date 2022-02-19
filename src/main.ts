@@ -7,8 +7,8 @@ import 'element-plus/dist/index.css'
 import 'semantic-ui-css/semantic.min.css'
 // 阿里巴巴矢量图标
 import '@/assets/icon/iconfont.css'
-// typo.css
-import "@/assets/css/typo.css";
+// typo.less
+import "@/assets/css/typo.less";
 // 自定义全局css
 import '@/assets/css/base.less'
 
