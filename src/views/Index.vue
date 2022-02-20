@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import Nav from "@/components/index/Nav.vue";
 import Header from "@/components/index/Header.vue"
-import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO } from "@/store/mutations-types";
-import { inject, onBeforeMount, onMounted, reactive, ref, watch, computed } from "vue";
+import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO, SCROLL_TO_TOP } from "@/store/mutations-types";
+import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import { getSite, getHitokoto } from "@/api";
+import { getHitokoto, getSite } from "@/api";
 import { useRoute } from "vue-router";
 import Introduction from "@/components/sidebar/Introduction.vue";
 import RandomBlog from "@/components/sidebar/RandomBlog.vue";
@@ -41,12 +41,6 @@ onMounted(() => {
     })
   }
 })
-
-//路由改变时，页面滚动至顶部
-watch(
-  () => route.path,
-  () => {inject('scrollToTop')}
-)
 
 const initSite = () => {
   // TODO
@@ -88,7 +82,7 @@ const initSite = () => {
             <!--中间-->
             <div class="ten wide column">
               <router-view v-slot="{ Component }">
-                <keep-alive include="Home">
+                <keep-alive>
                   <component :is="Component"/>
                 </keep-alive>
               </router-view>
@@ -107,7 +101,7 @@ const initSite = () => {
 
     <!--回到顶部-->
     <el-backtop style="box-shadow: none; background: none;">
-      <span title="回到顶部" class="iconfont icon-backtop" style="font-size: 40px"/>
+      <span title="回到顶部" class="iconfont icon-backtop" style="font-size: 40px; color: #48dbfb;"/>
     </el-backtop>
 
     <!--底部-->
