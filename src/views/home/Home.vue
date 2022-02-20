@@ -1,37 +1,46 @@
 <script lang="ts" setup>
-import { computed, nextTick, onMounted, ref } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref } from "vue";
 import { getBlogList } from "@/api/home";
 import 'assets/lib/prism/prism.js';
 import { useStore } from "vuex";
-import { SAVE_HOME_TOTAL_PAGE } from "@/store/mutations-types";
 import BlogList from "@/components/blog/BlogList.vue";
+import { SAVE_CURRENT_HOME_PAGE_NUM } from "@/store/mutations-types";
 
 // 使Prism兼容ts
 const Prism = (window as any).Prism;
 const store = useStore()
 
 const blogList = ref<any[]>([])
-const totalPage: any = computed(() => store.state.homeTotalPage)
+const totalPage = ref<number>(1)
+const currentPageNum = computed(() => store.state.currentHomePageNum)
 
 onMounted(() => {
-  initBlogList(totalPage)
+  initBlogList(totalPage.value)
+})
+
+onUnmounted(() => {
+  console.log('Unmounted')
 })
 
 // TODO
 const initBlogList = (pageNum: number) => {
   const data = getBlogList(pageNum)
   blogList.value = data.list
-  store.commit(SAVE_HOME_TOTAL_PAGE, data.totalPage || 1)
+  totalPage.value = data.totalPage
   nextTick(() => {
     // 解决异步高亮失效问题
     Prism.highlightAll()
   })
 }
+
+const handlePageNumChange = (pageNum: number) => {
+  store.commit(SAVE_CURRENT_HOME_PAGE_NUM, pageNum)
+}
 </script>
 
 <template>
   <div>
-    <BlogList :getBlogList="initBlogList" :blogList="blogList" :totalPage="totalPage"/>
+    <BlogList :getBlogList="initBlogList" :blogList="blogList" :totalPage="totalPage" :handlePageNumChange="handlePageNumChange" :currentPageNum="currentPageNum" />
   </div>
 </template>
 

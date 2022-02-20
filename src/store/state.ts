@@ -32,7 +32,7 @@ const state = {
 	// 博客文章渲染完成的标记
 	isBlogRenderComplete: false,
 	// 主页当前页码
-	homeTotalPage: 1
+	currentHomePageNum: 1
 }
 
 export default state

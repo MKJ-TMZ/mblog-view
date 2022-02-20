@@ -1,6 +1,6 @@
 export function getBlogList(pageNum: number) {
   return {
-    totalPage: 1,
+    totalPage: 10,
     list: [
       {
         id: 1,

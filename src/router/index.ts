@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from "@/store";
-import { SAVE_HOME_TOTAL_PAGE } from "@/store/mutations-types";
+import { SCROLL_TO_TOP, SAVE_CURRENT_HOME_PAGE_NUM } from "@/store/mutations-types";
 
 const routes = [
   {
@@ -17,13 +17,21 @@ const routes = [
         }
       },
       {
-        path: '/blog',
+        path: '/blog/:id',
         name: 'blog',
-        component: () => import('@/views/home/Home.vue'),
+        component: () => import('@/components/Test.vue'),
         meta: {
           title: '博客'
         }
-      }
+      },
+      {
+        path: '/moments',
+        name: 'moments',
+        component: () => import('@/components/Test.vue'),
+        meta: {
+          title: '动态'
+        }
+      },
     ]
   }
 ]
@@ -42,8 +50,13 @@ router.beforeEach((to, from, next) => {
       document.title = to.meta.title + ''
     }
   }
-  if (to.name === 'home' && from.name !== 'blog') {
-    store.commit(SAVE_HOME_TOTAL_PAGE, 1)
+  //路由改变时，页面滚动至顶部
+  if (from.name !== 'blog') {
+    store.commit(SCROLL_TO_TOP)
+  }
+  // 从主页访问博客再返回原页面，分页页数不变
+  if (!((from.name === 'blog' && to.name === 'home') || (from.name === 'home' && to.name === 'blog'))) {
+    store.commit(SAVE_CURRENT_HOME_PAGE_NUM, 1)
   }
   next()
 })
