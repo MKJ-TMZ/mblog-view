@@ -10,7 +10,7 @@ export function getSite() {
         title: "Copyright © 2021 - 2022",
         siteName: "MTCode's Blog"
       },
-      webTitleSuffix: " - MTCode's Blog",
+      webTitleSuffix: "MTCode's Blog",
       footerImgTitle: "手机看本站",
       footerImgUrl: "/img/qr.png"
     },

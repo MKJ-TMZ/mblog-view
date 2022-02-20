@@ -3,6 +3,8 @@ import { computed, onMounted, onUnmounted, watch } from "vue";
 import { useStore } from "vuex";
 import 'tocbot/dist/tocbot.min'
 
+// 使tocbot兼容ts
+const tocbot = (window as any).tocbot;
 const store = useStore()
 
 const isBlogRenderComplete = computed(() => store.state.isBlogRenderComplete)
@@ -15,7 +17,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  tocbot.refresh()
+  tocbot.destroy()
 })
 
 watch(

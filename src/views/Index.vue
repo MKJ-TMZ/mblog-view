@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Nav from "@/components/index/Nav.vue";
 import Header from "@/components/index/Header.vue"
-import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, } from "@/store/mutations-types";
+import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO } from "@/store/mutations-types";
 import { inject, onBeforeMount, onMounted, reactive, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 import { getSite, getHitokoto } from "@/api";
@@ -15,8 +15,8 @@ import Footer from "@/components/index/Footer.vue";
 const route = useRoute()
 const store = useStore()
 
-const categoryList =  reactive<object[]>([])
-const siteInfo = ref<{ blogName: string }>({blogName: ''})
+const categoryList =  ref<object[]>([])
+const siteInfo = ref<any>({})
 const randomBlogList = ref<any[]>([])
 const focusMode = computed(() => store.state.focusMode)
 const tagList = ref<any[]>([])
@@ -51,10 +51,11 @@ watch(
 const initSite = () => {
   // TODO
   const data = getSite()
-  categoryList.push(...data.categoryList)
+  store.commit(SAVE_INTRODUCTION, data.introduction)
+  store.commit(SAVE_SITE_INFO, data.siteInfo)
+  categoryList.value = data.categoryList
   siteInfo.value = data.siteInfo
   randomBlogList.value = data.randomBlogList
-  store.commit(SAVE_INTRODUCTION, data.introduction)
   tagList.value = data.tagList
   badges.value = data.badges
   newBlogList.value = data.newBlogList
@@ -69,10 +70,10 @@ const initSite = () => {
 <template>
   <div class="site">
     <!--顶部导航-->
-    <Nav :blogName="siteInfo.blogName" :categoryList="categoryList"/>
+    <Nav :categoryList="categoryList"/>
     <!--首页大图-->
     <div class="m-mobile-hide">
-      <Header :blogName="siteInfo.blogName" v-if="route.name==='home'"/>
+      <Header v-if="route.name==='home'"/>
     </div>
 
     <!--主体部分-->

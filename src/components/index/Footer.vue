@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 import { useStore } from "vuex";
 
 const store = useStore()
@@ -73,7 +72,7 @@ const toBlog = (blog: any) => {
 </template>
 
 <style lang="less" scoped>
-@import ~"@/assets/css/badge.less";
+@import ~"@/assets/less/badge.less";
 
 .github-badge a {
   color: #fff;
