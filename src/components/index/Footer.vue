@@ -31,7 +31,7 @@ const toBlog = (blog: any) => {
     <div class="ui center aligned container">
       <div class="ui inverted divided stackable grid">
 
-        <div class="three wide column">
+        <div class="three wide column m-mobile-hide">
           <div class="ui link list">
             <h4 class="ui inverted header m-text-thin m-text-spaced">{{ siteInfo.footerImgTitle }}</h4>
             <div class="item">
