@@ -8,9 +8,14 @@ import 'semantic-ui-css/semantic.min.css'
 // 阿里巴巴矢量图标
 import '@/assets/icon/iconfont.css'
 // typo.less
-import "@/assets/css/typo.less";
+import "@/assets/less/typo.less";
 // 自定义全局css
-import '@/assets/css/base.less'
+import '@/assets/less/base.less'
+// prism代码高亮
+import '@/assets/lib/prism/prism.css';
+// v-viewer图片预览组件
+import Viewer from "v-viewer";
+import 'viewerjs/dist/viewer.css'
 
 console.log(
   '%c MTCode %c By MTCode %c https://mkj-tmz.github.io/',
@@ -61,4 +66,5 @@ app.provide('scrollToTop', scrollToTop);
 app.use(store)
   .use(router)
   .use(ElementPlus)
+  .use(Viewer)
   .mount('#app')

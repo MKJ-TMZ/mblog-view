@@ -1,28 +1,20 @@
-interface StateType {
-	clientSize: {
-		clientHeight: number,
-		clientWidth: number
-	},
-	introduction: {
-		avatar: string,
-		name: string,
-		rollText: string,
-		bilibili: string,
-		email: string,
-		favorites: any[],
-		github: string,
-		bangumi: string,
-		qq: string,
-	},
-	focusMode: boolean,
-	isBlogRenderComplete: boolean
-}
-
-const state: StateType = {
+const state = {
 	//可视窗口大小
 	clientSize: {
 		clientHeight: 0,
 		clientWidth: 1080
+	},
+	siteInfo: {
+		blogName: '',
+		commentAdminFlag: false,
+		reward: '',
+		copyright: {
+			title: '',
+			siteName: ''
+		},
+		webTitleSuffix: '',
+		footerImgTitle: '',
+		footerImgUrl: ''
 	},
 	introduction: {
 		avatar: '',
@@ -35,10 +27,12 @@ const state: StateType = {
 		bangumi: '',
 		qq: '',
 	},
-	//专注模式
+	// 专注模式
 	focusMode: false,
-	//博客文章渲染完成的标记
+	// 博客文章渲染完成的标记
 	isBlogRenderComplete: false,
+	// 主页当前页码
+	homeTotalPage: 1
 }
 
-export { state, StateType }
+export default state
