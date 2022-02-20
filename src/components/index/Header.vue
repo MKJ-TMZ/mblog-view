@@ -8,17 +8,12 @@ import wave1 from 'assets/img/wave1.png'
 import wave2 from 'assets/img/wave2.png'
 
 const store = useStore()
-const props = defineProps({
-  blogName: {
-    type: String,
-    required: true
-  }
-})
 
 const loaded = ref<boolean>(false)
 const imgBg = ref<any>(null)
 const header = ref<any>(null)
 const clientSize: any = computed(() => store.state.clientSize)
+const blogName: any = computed(() => store.state.siteInfo.blogName)
 
 onMounted(() => {
   imgBg.value.onload = () => {

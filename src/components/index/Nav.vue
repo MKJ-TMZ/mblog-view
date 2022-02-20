@@ -8,10 +8,6 @@ const route = useRoute()
 const router = useRouter()
 const store = useStore()
 const props = defineProps({
-  blogName: {
-    type: String,
-    required: true
-  },
   categoryList: {
     type: Array,
     required: true
@@ -22,7 +18,8 @@ const mobileHide = ref<boolean>(true)
 const queryString = ref<string>('')
 const queryResult = ref<object[]>([])
 const navRef = ref<any>(null)
-const clientSize = computed(() => store.state.clientSize)
+const clientSize: any = computed(() => store.state.clientSize)
+const blogName: any = computed(() => store.state.siteInfo.blogName)
 
 watch(
   () => route.path,

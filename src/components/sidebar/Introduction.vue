@@ -4,7 +4,7 @@ import { useStore } from "vuex";
 
 const store = useStore()
 
-const introduction = computed(() => store.state.introduction)
+const introduction: any = computed(() => store.state.introduction)
 </script>
 
 <template>

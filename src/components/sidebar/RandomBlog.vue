@@ -23,7 +23,7 @@ const toBlog = (blog: any) => {
     <div class="ui secondary segment"><i class="bookmark icon"></i>随机文章</div>
     <div class="ui yellow segment">
       <div class="ui divided items">
-        <div class="m-item" v-for="blog in randomBlogList" :key="blog.id" @click="toBlog(blog)">
+        <div class="m-item" v-for="blog in randomBlogList" :key="blog.id" @click.prevent="toBlog(blog)">
           <div class="img" :style="{'background-image':'url(' + blog.firstPicture + ')'}"></div>
           <div class="info">
             <div class="date">{{ moment(blog.createTime).format('YYYY-MM-DD') }}</div>
