@@ -7,7 +7,7 @@ const state = {
 	siteInfo: {
 		blogName: '',
 		commentAdminFlag: false,
-		reward: '',
+		reward: '/public/img/avatar.jpg',
 		copyright: {
 			title: '',
 			siteName: ''

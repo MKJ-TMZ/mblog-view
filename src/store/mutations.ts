@@ -3,7 +3,9 @@ import {
   SAVE_INTRODUCTION,
   SAVE_SITE_INFO,
   SAVE_CURRENT_HOME_PAGE_NUM,
-  SCROLL_TO_TOP
+  SCROLL_TO_TOP,
+  SAVE_IS_BLOG_RENDER_COMPLETE,
+  SAVE_FOCUS_MODE
 } from "./mutations-types";
 
 export default {
@@ -37,5 +39,11 @@ export default {
       }
     }
     rAF(frameFunc)
+  },
+  [SAVE_IS_BLOG_RENDER_COMPLETE](state: any, blogState: boolean) {
+    state.isBlogRenderComplete = blogState
+  },
+  [SAVE_FOCUS_MODE](state: any, focusMode: boolean) {
+    state.focusMode = focusMode
   },
 }

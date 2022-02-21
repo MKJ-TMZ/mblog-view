@@ -33,7 +33,7 @@ const toBlog = (blog: any) => {
           <div class="row m-padded-tb-small">
             <div class="ui horizontal link list m-center">
               <div class="item m-datetime">
-                <i class="small calendar icon"></i><span>{{ moment(item.createTime).format('YYYY-MM-DD')}}</span>
+                <i class="small calendar icon"></i><span>{{ moment(item.createTime).format('YYYY-MM-DD') }}</span>
               </div>
               <div class="item m-views">
                 <i class="small eye icon"></i><span>{{ item.views }}</span>

@@ -5,7 +5,7 @@ export function getSite() {
     siteInfo: {
       blogName: `MTCode's blog`,
       commentAdminFlag: false,
-      reward: "/img/reward.jpg",
+      reward: "/img/qr.png",
       copyright: {
         title: "Copyright © 2021 - 2022",
         siteName: "MTCode's Blog"
