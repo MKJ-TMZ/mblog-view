@@ -51,7 +51,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   //路由改变时，页面滚动至顶部
-  if (from.name !== 'blog') {
+  if (to.name !== 'home') {
     store.commit(SCROLL_TO_TOP)
   }
   // 从主页访问博客再返回原页面，分页页数不变
