@@ -101,7 +101,7 @@ const initSite = () => {
 
     <!--回到顶部-->
     <el-backtop class="m-mobile-hide" style="box-shadow: none; background: none;">
-      <span title="回到顶部" class="iconfont icon-backtop" style="font-size: 40px; color: #48dbfb;"/>
+      <span title="回到顶部" class="iconfont icon-backtop" style="font-size: 40px; color: #66CCFF;"/>
     </el-backtop>
 
     <!--底部-->

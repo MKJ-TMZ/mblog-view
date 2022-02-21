@@ -60,6 +60,6 @@ const handleCurrentChange = (newPage: number) => {
 }
 
 /deep/.el-pagination.is-background .el-pager li:not(.disabled).active {
-  background-color: #409EFF !important;
+  background-color: #66CCFF !important;
 }
 </style>
