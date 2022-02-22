@@ -5,7 +5,11 @@ import {
   SAVE_CURRENT_HOME_PAGE_NUM,
   SCROLL_TO_TOP,
   SAVE_IS_BLOG_RENDER_COMPLETE,
-  SAVE_FOCUS_MODE
+  SAVE_FOCUS_MODE,
+  SAVE_CURRENT_CATEGORY_PAGE_NUM,
+  SAVE_CURRENT_CATEGORY_NAME,
+  SAVE_CURRENT_TAG_PAGE_NUM,
+  SAVE_CURRENT_TAG_NAME
 } from "./mutations-types";
 
 export default {
@@ -45,5 +49,17 @@ export default {
   },
   [SAVE_FOCUS_MODE](state: any, focusMode: boolean) {
     state.focusMode = focusMode
+  },
+  [SAVE_CURRENT_CATEGORY_PAGE_NUM](state: any, currentCategoryPageNum: number) {
+    state.currentCategoryPageNum = currentCategoryPageNum
+  },
+  [SAVE_CURRENT_CATEGORY_NAME](state: any, currentCategoryName: string) {
+    state.currentCategoryName = currentCategoryName
+  },
+  [SAVE_CURRENT_TAG_PAGE_NUM](state: any, currentTagPageNum: number) {
+    state.currentTagPageNum = currentTagPageNum
+  },
+  [SAVE_CURRENT_TAG_NAME](state: any, currentTagName: string) {
+    state.currentTagName = currentTagName
   },
 }

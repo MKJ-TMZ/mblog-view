@@ -32,7 +32,15 @@ const state = {
 	// 博客文章渲染完成的标记
 	isBlogRenderComplete: false,
 	// 主页当前页码
-	currentHomePageNum: 1
+	currentHomePageNum: 1,
+	// 分类当前页码
+	currentCategoryPageNum: 1,
+	// 当前分类名称
+	currentCategoryName: '',
+	// 标签当前页码
+	currentTagPageNum: 1,
+	// 当前标签名称
+	currentTagName: '',
 }
 
 export default state
