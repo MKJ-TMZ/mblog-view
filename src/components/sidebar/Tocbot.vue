@@ -22,8 +22,12 @@ onUnmounted(() => {
 
 watch(
     //文章渲染完成时，生成目录
-    () => isBlogRenderComplete,
-    () => {initTocbot()}
+    () => isBlogRenderComplete.value,
+    () => {
+      if (isBlogRenderComplete.value) {
+        initTocbot()
+      }
+    }
 )
 
 const initTocbot = () => {
@@ -62,65 +66,65 @@ const initTocbot = () => {
 </template>
 
 <style lang="less" scoped>
-.m-toc {
+/deep/.m-toc {
   z-index: 10 !important;
 }
 
-.toc {
+/deep/.toc {
   overflow-y: auto
 }
 
-.toc > ul {
+/deep/.toc > ul {
   overflow: hidden;
   position: relative
 }
 
-.toc > ul li {
+/deep/.toc > ul li {
   list-style: none
 }
 
-.toc-list {
+/deep/.toc-list {
   list-style-type: none;
   margin: 0;
   padding-left: 10px
 }
 
-.toc-list li a {
+/deep/.toc-list li a {
   display: block;
   padding: 4px 0;
   font-weight: 300;
 }
 
-.toc-list li a:hover {
+/deep/.toc-list li a:hover {
   color: #fbbd08;
 }
 
-a.toc-link {
+/deep/a.toc-link {
   color: currentColor;
   height: 100%
 }
 
-.is-collapsible {
+/deep/.is-collapsible {
   max-height: 1000px;
   overflow: hidden;
   transition: all 300ms ease-in-out
 }
 
-.is-collapsed {
+/deep/.is-collapsed {
   max-height: 0
 }
 
-.is-position-fixed {
+/deep/.is-position-fixed {
   position: sticky !important;
   top: 60px
 }
 
-.is-active-link {
+/deep/.is-active-link {
   font-weight: 700;
   color: #fbbd08 !important;
 }
 
-.toc-link::before {
+/deep/.toc-link::before {
   background-color: #EEE;
   content: ' ';
   display: inline-block;
@@ -131,7 +135,7 @@ a.toc-link {
   width: 2px
 }
 
-.is-active-link::before {
+/deep/.is-active-link::before {
   background-color: #54BC4B
 }
 </style>
