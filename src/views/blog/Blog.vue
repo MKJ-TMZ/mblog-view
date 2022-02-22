@@ -109,7 +109,7 @@ const changeFocusMode = () => {
           <div style="margin: 2em auto">
             <el-popover placement="top" width="220" trigger="click" v-if="blogData.appreciation">
               <template #reference>
-                <el-button class="ui orange inverted circular button m-text">赞赏</el-button>
+                <el-button color="#f2711c" style="color: white;" round>赞赏</el-button>
               </template>
               <div class="ui orange basic label" style="width: 100%">
                 <div class="image">
@@ -155,8 +155,6 @@ const changeFocusMode = () => {
     </div>
     <!--评论-->
     <div class="ui bottom teal attached segment threaded comments">
-<!--      <CommentList :page="0" :blogId="route.params.blogId" v-if="blogData.commentEnabled"/>-->
-<!--      <h3 class="ui header" v-else>评论已关闭</h3>-->
     </div>
   </div>
 </template>
@@ -164,13 +162,5 @@ const changeFocusMode = () => {
 <style lang="less" scoped>
 .el-divider {
   margin: 1rem 0 !important;
-}
-
-h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
-  display: block;
-  content: " ";
-  height: 55px;
-  margin-top: -55px;
-  visibility: hidden;
 }
 </style>

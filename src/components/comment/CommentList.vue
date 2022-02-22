@@ -1,12 +1,10 @@
-<template>
-$END$
-</template>
+<script lang="ts" setup>
 
-<script>
-export default {
-name: "CommentList.vue"
-}
 </script>
+
+<template>
+
+</template>
 
 <style scoped>
 
