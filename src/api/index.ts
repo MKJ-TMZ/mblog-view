@@ -1,4 +1,4 @@
-import axios from "@/plugins/axios";
+import axios from "@/utils/axios";
 
 export function getSite() {
   return {
