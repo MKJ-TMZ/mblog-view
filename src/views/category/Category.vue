@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { onMounted, ref, watch } from "vue";
+import { onBeforeMount, ref, watch, computed, nextTick } from "vue";
 import { useRoute } from "vue-router";
-import { computed, nextTick } from "_vue@3.2.31@vue";
 import { useStore } from "vuex";
 import { getBlogList } from "@/api/home";
 import 'assets/lib/prism/prism.js';
@@ -17,7 +16,7 @@ const blogList = ref<any[]>([])
 const totalPage = ref<number>(1)
 const currentPageNum = computed(() => store.state.currentCategoryPageNum)
 
-onMounted(() => {
+onBeforeMount(() => {
   initBlogList(currentPageNum.value)
 })
 

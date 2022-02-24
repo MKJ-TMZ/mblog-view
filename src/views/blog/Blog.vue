@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch, nextTick } from "vue";
+import { computed, nextTick, onBeforeMount, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 import { SAVE_FOCUS_MODE, SAVE_IS_BLOG_RENDER_COMPLETE } from "@/store/mutations-types";
@@ -19,7 +19,7 @@ const siteInfo = computed(() => store.state.siteInfo)
 const focusMode = computed(() => store.state.focusMode)
 const blogData = ref<any>({})
 
-onMounted(() => {
+onBeforeMount(() => {
   getBlog(route.params.blogId)
 })
 
