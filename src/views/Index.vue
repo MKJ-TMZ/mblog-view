@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Nav from "@/components/index/Nav.vue";
 import Header from "@/components/index/Header.vue"
-import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO, SCROLL_TO_TOP } from "@/store/mutations-types";
-import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
+import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO } from "@/store/mutations-types";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { getHitokoto, getSite } from "@/api";
 import { useRoute } from "vue-router";
