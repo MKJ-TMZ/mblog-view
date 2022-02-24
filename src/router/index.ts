@@ -49,6 +49,14 @@ const routes = [
         }
       },
       {
+        path: '/archives',
+        name: 'archives',
+        component: () => import('@/views/archives/Archives.vue'),
+        meta: {
+          title: '归档'
+        }
+      },
+      {
         path: '/moments',
         name: 'moments',
         component: () => import('@/components/Test.vue'),
