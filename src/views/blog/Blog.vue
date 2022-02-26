@@ -109,7 +109,9 @@ const changeFocusMode = () => {
           <div style="margin: 2em auto">
             <el-popover placement="top" width="220" trigger="click" v-if="blogData.appreciation">
               <template #reference>
-                <el-button color="#f2711c" style="color: white;" round>赞赏</el-button>
+                <span>
+                  <el-button color="#f2711c" style="color: white;" round>赞赏</el-button>
+                </span>
               </template>
               <div class="ui orange basic label" style="width: 100%">
                 <div class="image">

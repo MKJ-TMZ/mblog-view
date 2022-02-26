@@ -2,10 +2,10 @@
 import { onBeforeMount, ref, watch, computed, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { getBlogList } from "@/api/home";
 import 'assets/lib/prism/prism.js';
 import BlogList from "@/components/blog/BlogList.vue";
 import { SAVE_CURRENT_CATEGORY_PAGE_NUM } from "@/store/mutations-types";
+import { getBlogListByCategoryName } from "@/api/category";
 
 // 使Prism兼容ts
 const Prism = (window as any).Prism;
@@ -17,19 +17,19 @@ const totalPage = ref<number>(1)
 const currentPageNum = computed(() => store.state.currentCategoryPageNum)
 
 onBeforeMount(() => {
-  initBlogList(currentPageNum.value)
+  initBlogList(route.params.name, currentPageNum.value)
 })
 
 
 watch(
     () => route.params,
     () => {
-      initBlogList(currentPageNum.value)
+      initBlogList(route.params.name, currentPageNum.value)
     }
 )
 
-const initBlogList = (pageNum: number) => {
-  const data = getBlogList(pageNum)
+const initBlogList = (categoryName: any, pageNum: number) => {
+  const data = getBlogListByCategoryName(categoryName, pageNum)
   blogList.value = data.list
   totalPage.value = data.totalPage
   nextTick(() => {

@@ -109,7 +109,7 @@ const initSite = () => {
   </div>
 </template>
 
-<style scoped>
+<style lang="less" scoped>
 .site {
   display: flex;
   min-height: 100vh; /* 没有元素时，也把页面撑开至100% */
