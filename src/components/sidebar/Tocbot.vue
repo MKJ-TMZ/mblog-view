@@ -66,65 +66,65 @@ const initTocbot = () => {
 </template>
 
 <style lang="less" scoped>
-/deep/.m-toc {
+:deep(.m-toc) {
   z-index: 10 !important;
 }
 
-/deep/.toc {
+:deep(.toc) {
   overflow-y: auto
 }
 
-/deep/.toc > ul {
+:deep(.toc > ul) {
   overflow: hidden;
   position: relative
 }
 
-/deep/.toc > ul li {
+:deep(.toc > ul li) {
   list-style: none
 }
 
-/deep/.toc-list {
+:deep(.toc-list) {
   list-style-type: none;
   margin: 0;
   padding-left: 10px
 }
 
-/deep/.toc-list li a {
+:deep(.toc-list li a) {
   display: block;
   padding: 4px 0;
   font-weight: 300;
 }
 
-/deep/.toc-list li a:hover {
+:deep(.toc-list li a:hover) {
   color: #fbbd08;
 }
 
-/deep/a.toc-link {
+:deep(a.toc-link) {
   color: currentColor;
   height: 100%
 }
 
-/deep/.is-collapsible {
+:deep(.is-collapsible) {
   max-height: 1000px;
   overflow: hidden;
   transition: all 300ms ease-in-out
 }
 
-/deep/.is-collapsed {
+:deep(.is-collapsed) {
   max-height: 0
 }
 
-/deep/.is-position-fixed {
+:deep(.is-position-fixed) {
   position: sticky !important;
   top: 60px
 }
 
-/deep/.is-active-link {
+:deep(.is-active-link) {
   font-weight: 700;
   color: #fbbd08 !important;
 }
 
-/deep/.toc-link::before {
+:deep(.toc-link::before) {
   background-color: #EEE;
   content: ' ';
   display: inline-block;
@@ -135,7 +135,7 @@ const initTocbot = () => {
   width: 2px
 }
 
-/deep/.is-active-link::before {
+:deep(.is-active-link::before) {
   background-color: #54BC4B
 }
 </style>

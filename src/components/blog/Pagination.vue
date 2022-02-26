@@ -54,11 +54,11 @@ const handleCurrentChange = (newPage: number) => {
 </template>
 
 <style lang="less" scoped>
-/deep/.el-pagination.is-background .btn-next, /deep/.el-pagination.is-background .btn-prev, /deep/.el-pagination.is-background .el-pager li {
+:deep(.el-pagination.is-background) .btn-next, :deep(.el-pagination.is-background) .btn-prev, :deep(.el-pagination.is-background .el-pager li) {
   background-color: #ffffff !important;
 }
 
-/deep/.el-pagination.is-background .el-pager li:not(.disabled).active {
+:deep(.el-pagination.is-background .el-pager li:not(.disabled).active) {
   background-color: #66CCFF !important;
 }
 </style>
