@@ -59,9 +59,25 @@ const routes = [
       {
         path: '/moments',
         name: 'moments',
-        component: () => import('@/components/Test.vue'),
+        component: () => import('@/views/moments/Moments.vue'),
         meta: {
           title: '动态'
+        }
+      },
+      {
+        path: '/friends',
+        name: 'friends',
+        component: () => import('@/views/friends/Friends.vue'),
+        meta: {
+          title: '友人帐'
+        }
+      },
+      {
+        path: '/about',
+        name: 'about',
+        component: () => import('@/views/about/About.vue'),
+        meta: {
+          title: '关于我'
         }
       },
     ]
@@ -97,12 +113,12 @@ router.beforeEach((to, from, next) => {
     store.commit(SAVE_IS_BLOG_RENDER_COMPLETE, false)
   }
 
-  // 从主页访问博客再返回原页面，分页页数不变
+  // 不是从主页访问博客再返回原页面，重置分页
   if (!((from.name === 'blog' && to.name === 'home') || (from.name === 'home' && to.name === 'blog'))) {
     store.commit(SAVE_CURRENT_HOME_PAGE_NUM, 1)
   }
 
-  // 从分类页访问博客再返回原页面，分页页数不变
+  // 不是从分类页访问博客再返回原页面，重置分页
   if (!((from.name === 'blog' && to.name === 'category') || (from.name === 'category' && to.name === 'blog'))) {
     store.commit(SAVE_CURRENT_CATEGORY_PAGE_NUM, 1)
   }
@@ -118,7 +134,7 @@ router.beforeEach((to, from, next) => {
     store.commit(SCROLL_TO_TOP)
   }
 
-  // 从标签页访问博客再返回原页面，分页页数不变
+  // 不是从标签页访问博客再返回原页面，重置分页
   if (!((from.name === 'blog' && to.name === 'tag') || (from.name === 'tag' && to.name === 'blog'))) {
     store.commit(SAVE_CURRENT_TAG_PAGE_NUM, 1)
   }
