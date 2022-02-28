@@ -1,4 +1,4 @@
-import { createApp, getCurrentInstance } from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from "@/router";
 import store from './store'
@@ -25,23 +25,6 @@ console.log(
 )
 
 const app = createApp(App)
-const internalInstance: any = getCurrentInstance()
-
-const msgSuccess = function (msg: string) {
-  internalInstance.appContext.config.globalProperties.$message.success(msg)
-}
-app.provide('msgSuccess', msgSuccess);
-
-const msgError = function (msg: string) {
-  internalInstance.appContext.config.globalProperties.$message.error(msg)
-}
-app.provide('msgError', msgError);
-
-const msgInfo = function (msg: string) {
-  internalInstance.appContext.config.globalProperties.$message.info(msg)
-}
-app.provide('msgInfo', msgInfo);
-
 
 app.use(store)
   .use(router)
