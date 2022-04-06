@@ -7,6 +7,7 @@ import 'tocbot/dist/tocbot.min'
 import 'assets/lib/prism/prism.js';
 import { getBlogById } from "@/api/blog";
 import * as moment from "moment";
+import { isNotEmpty } from "@/utils/func";
 
 // 使tocbot兼容ts
 const tocbot = (window as any).tocbot;
@@ -15,7 +16,7 @@ const Prism = (window as any).Prism;
 const store = useStore()
 const route = useRoute()
 
-const siteInfo = computed(() => store.state.siteInfo)
+const baseSetting = computed(() => store.state.baseSetting)
 const focusMode = computed(() => store.state.focusMode)
 const blogData = ref<any>({})
 
@@ -24,9 +25,12 @@ onBeforeMount(() => {
 })
 
 watch(
-  () => route.params,
+  () => route.params.blogId,
   () => {
-    getBlog(route.params.blogId)
+    const blogId = route.params.blogId
+    if (isNotEmpty(blogId as string)) {
+      getBlog(route.params.blogId)
+    }
   }
 )
 
@@ -44,7 +48,7 @@ onBeforeRouteUpdate((to: any, from: any, next: any) => {
 
 const getBlog = (blogId: any) => {
   blogData.value = getBlogById(blogId)
-  document.title = blogData.value.title + ' - ' + siteInfo.value.webTitleSuffix
+  document.title = blogData.value.title + ' - ' + baseSetting.value.webTitleSuffix
   nextTick(() => {
     // 解决异步高亮失效问题
     Prism.highlightAll()
@@ -116,7 +120,7 @@ const changeFocusMode = () => {
               <div class="ui orange basic label" style="width: 100%">
                 <div class="image">
                   <img
-                      :src="store.state.siteInfo.reward"
+                      :src="baseSetting.rewardUrl"
                       alt=""
                       class="ui rounded bordered image"
                       style="width: 100%"
@@ -147,7 +151,7 @@ const changeFocusMode = () => {
     <!--博客信息-->
     <div class="ui attached positive message">
       <ul class="list">
-        <li>作者：{{ store.state.introduction.name }}
+        <li>作者：{{ store.state.profileSetting.nickname }}
           <router-link to="/about">（联系作者）</router-link>
         </li>
         <li>发表时间：{{ moment(blogData.createTime).format('YYYY-MM-DD') }}</li>

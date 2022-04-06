@@ -92,8 +92,8 @@ const router = createRouter({
 //挂载路由守卫
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
-    if (store.state.siteInfo.webTitleSuffix) {
-      document.title = to.meta.title + ' - ' + store.state.siteInfo.webTitleSuffix
+    if (store.state.baseSetting.webTitleSuffix) {
+      document.title = to.meta.title + ' - ' + store.state.baseSetting.webTitleSuffix
     } else {
       document.title = to.meta.title + ''
     }

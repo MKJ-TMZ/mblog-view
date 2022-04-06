@@ -66,11 +66,11 @@ const handleLike = (id: number) => {
       <div class="moments">
         <div class="moment" v-for="(moment, index) in momentList" :key="index">
           <div class="avatar">
-            <img alt="" :src="store.state.introduction.avatar">
+            <img alt="" :src="store.state.profileSetting.coverUrl">
           </div>
           <div class="ui card">
             <div class="content m-top">
-              <span style="font-weight: 700">{{ store.state.introduction.name }}</span>
+              <span style="font-weight: 700">{{ store.state.profileSetting.nickname }}</span>
               <span class="right floated">{{ dateFromNow(moment.createTime) }}</span>
             </div>
             <div class="content typo" :class="{privacy: !moment.published}" v-viewer v-html="moment.content"></div>

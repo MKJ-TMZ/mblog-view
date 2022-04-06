@@ -3,7 +3,7 @@ import { useStore } from "vuex";
 
 const store = useStore()
 const props = defineProps({
-  siteInfo: {
+  baseSetting: {
     type: Object,
     required: true
   },
@@ -33,9 +33,9 @@ const toBlog = (blog: any) => {
 
         <div class="three wide column m-mobile-hide">
           <div class="ui link list">
-            <h4 class="ui inverted header m-text-thin m-text-spaced">{{ siteInfo.footerImgTitle }}</h4>
+            <h4 class="ui inverted header m-text-thin m-text-spaced">手机看本站</h4>
             <div class="item">
-              <img :src="siteInfo.footerImgUrl" class="ui rounded image" alt="" style="width: 100px">
+              <img src="/img/qr.png" class="ui rounded image" alt="" style="width: 100px">
             </div>
           </div>
         </div>
@@ -56,8 +56,8 @@ const toBlog = (blog: any) => {
       <div class="ui inverted section divider"></div>
 
       <p class="m-text-thin m-text-spaced m-opacity-tiny">
-        <span style="margin-right: 10px" v-if="siteInfo.copyright">{{ siteInfo.copyright.title }}</span>
-        <router-link to="/" style="color:#ffe500" v-if="siteInfo.copyright">{{ siteInfo.copyright.siteName }}</router-link>
+        <span style="margin-right: 10px" v-if="baseSetting.copyright">{{ baseSetting.copyright }}</span>
+        <router-link to="/" style="color:#ffe500" v-if="baseSetting.copyright">{{ baseSetting.webTitleSuffix }}</router-link>
       </p>
 
       <div class="github-badge" v-for="(item, index) in badges" :key="index">

@@ -4,28 +4,27 @@ const state = {
 		clientHeight: 0,
 		clientWidth: 1080
 	},
-	siteInfo: {
-		blogName: '',
-		commentAdminFlag: false,
-		reward: '/public/img/avatar.jpg',
-		copyright: {
-			title: '',
-			siteName: ''
-		},
-		webTitleSuffix: '',
-		footerImgTitle: '',
-		footerImgUrl: ''
+	baseSetting: {
+		blogName: "",
+		webTitleSuffix: "",
+		homeTitle: "",
+		copyright: "",
+		icpNo: null,
+		rewardUrl: "",
+		createUser: "",
+		createTime: "",
+		updateTime: ""
 	},
-	introduction: {
-		avatar: '',
-		name: '',
-		rollText: '',
-		bilibili: '',
-		email: '',
-		favorites: [],
-		github: '',
-		bangumi: '',
-		qq: '',
+	profileSetting: {
+		coverUrl: '',
+		nickname: '',
+		autograph: '',
+		githubUrl: '',
+		qqUrl: '',
+		biliUrl: '',
+		bangumiUrl: '',
+		emailUrl: '',
+		customList: [],
 	},
 	// 专注模式
 	focusMode: false,

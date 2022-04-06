@@ -13,7 +13,7 @@ const loaded = ref<boolean>(false)
 const imgBg = ref<any>(null)
 const header = ref<any>(null)
 const clientSize: any = computed(() => store.state.clientSize)
-const blogName: any = computed(() => store.state.siteInfo.blogName)
+const homeTitle: any = computed(() => store.state.baseSetting.homeTitle)
 
 onMounted(() => {
   imgBg.value.onload = () => {
@@ -60,7 +60,7 @@ const scrollToMain = () => {
       <div class="bg2" :style="{backgroundImage: `url(${homeTop2})`}" v-show="loaded"/>
       <div class="bg3" :style="{backgroundImage: `url(${homeTop3})`}" v-show="loaded"/>
     </div>
-    <div class="text-malfunction" :data-word="blogName">
+    <div class="text-malfunction" :data-word="homeTitle">
       <div class="line"/>
     </div>
     <div class="wrapper">

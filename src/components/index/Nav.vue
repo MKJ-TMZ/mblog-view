@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStore } from 'vuex'
-import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getSearchBlogList } from "@/api/blog";
 
@@ -19,7 +19,7 @@ const queryString = ref<string>('')
 const queryResult = ref<object[]>([])
 const navRef = ref<any>(null)
 const clientSize: any = computed(() => store.state.clientSize)
-const blogName: any = computed(() => store.state.siteInfo.blogName)
+const blogName: any = computed(() => store.state.baseSetting.blogName)
 
 watch(
   () => route.path,

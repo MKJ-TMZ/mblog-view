@@ -1,7 +1,7 @@
 import {
   SAVE_CLIENT_SIZE,
-  SAVE_INTRODUCTION,
-  SAVE_SITE_INFO,
+  SAVE_PROFILE_SETTING,
+  SAVE_BASE_SETTING,
   SAVE_CURRENT_HOME_PAGE_NUM,
   SCROLL_TO_TOP,
   SAVE_IS_BLOG_RENDER_COMPLETE,
@@ -16,11 +16,11 @@ export default {
   [SAVE_CLIENT_SIZE](state: any, clientSize: any) {
     state.clientSize = clientSize
   },
-  [SAVE_SITE_INFO](state: any, siteInfo: any) {
-    state.siteInfo = siteInfo
+  [SAVE_BASE_SETTING](state: any, baseSetting: any) {
+    state.baseSetting = baseSetting
   },
-  [SAVE_INTRODUCTION](state: any, introduction: any) {
-    state.introduction = introduction
+  [SAVE_PROFILE_SETTING](state: any, profileSetting: any) {
+    state.profileSetting = profileSetting
   },
   [SAVE_CURRENT_HOME_PAGE_NUM](state: any, currentHomePageNum: number) {
     state.currentHomePageNum = currentHomePageNum

@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import Nav from "@/components/index/Nav.vue";
 import Header from "@/components/index/Header.vue"
-import { SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO } from "@/store/mutations-types";
+import { SAVE_CLIENT_SIZE, SAVE_PROFILE_SETTING, SAVE_BASE_SETTING } from "@/store/mutations-types";
 import { computed, onBeforeMount, onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import { getHitokoto, getSite } from "@/api";
+import { getBaseSetting, getHitokoto, getProfileSetting, getSite } from "@/api";
 import { useRoute } from "vue-router";
-import Introduction from "@/components/sidebar/Introduction.vue";
+import Profile from "@/components/sidebar/Profile.vue";
 import RandomBlog from "@/components/sidebar/RandomBlog.vue";
 import Tags from "@/components/sidebar/Tags.vue";
 import Tocbot from "@/components/sidebar/Tocbot.vue";
 import Footer from "@/components/index/Footer.vue";
+import { msgError } from "@/utils/message";
 
 const route = useRoute()
 const store = useStore()
 
-const categoryList =  ref<object[]>([])
-const siteInfo = ref<any>({})
+const categoryList =  ref<any[]>([])
+const baseSetting = computed(() => store.state.baseSetting)
 const randomBlogList = ref<any[]>([])
 const focusMode = computed(() => store.state.focusMode)
 const tagList = ref<any[]>([])
@@ -43,12 +44,32 @@ onMounted(() => {
 })
 
 const initSite = () => {
+  // 获取基础设置
+  getBaseSetting().then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      store.commit(SAVE_BASE_SETTING, data)
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
+
+  // 获取个人档案设置
+  getProfileSetting().then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      store.commit(SAVE_PROFILE_SETTING, data)
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
+
+
   // TODO
   const data = getSite()
-  store.commit(SAVE_INTRODUCTION, data.introduction)
-  store.commit(SAVE_SITE_INFO, data.siteInfo)
   categoryList.value = data.categoryList
-  siteInfo.value = data.siteInfo
   randomBlogList.value = data.randomBlogList
   tagList.value = data.tagList
   badges.value = data.badges
@@ -77,15 +98,11 @@ const initSite = () => {
           <div class="ui stackable grid">
             <!--左侧-->
             <div class="three wide column m-mobile-hide">
-              <Introduction :class="{'m-display-none': focusMode}"/>
+              <Profile :class="{'m-display-none': focusMode}"/>
             </div>
             <!--中间-->
             <div class="ten wide column">
-              <router-view v-slot="{ Component }">
-                <keep-alive>
-                  <component :is="Component"/>
-                </keep-alive>
-              </router-view>
+              <router-view/>
             </div>
             <!--右侧-->
             <div class="three wide column m-mobile-hide">
@@ -105,7 +122,7 @@ const initSite = () => {
     </el-backtop>
 
     <!--底部-->
-    <Footer :siteInfo="siteInfo" :badges="badges" :newBlogList="newBlogList" :hitokoto="hitokoto"/>
+    <Footer :baseSetting="baseSetting" :badges="badges" :newBlogList="newBlogList" :hitokoto="hitokoto"/>
   </div>
 </template>
 
