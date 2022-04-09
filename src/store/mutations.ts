@@ -9,7 +9,7 @@ import {
   SAVE_CURRENT_CATEGORY_PAGE_NUM,
   SAVE_CURRENT_CATEGORY_NAME,
   SAVE_CURRENT_TAG_PAGE_NUM,
-  SAVE_CURRENT_TAG_NAME
+  SAVE_CURRENT_TAG_NAME, SAVE_FOOTER_SETTING
 } from "./mutations-types";
 
 export default {
@@ -21,6 +21,9 @@ export default {
   },
   [SAVE_PROFILE_SETTING](state: any, profileSetting: any) {
     state.profileSetting = profileSetting
+  },
+  [SAVE_FOOTER_SETTING](state: any, saveFooterSetting: any) {
+    state.footerSetting = saveFooterSetting
   },
   [SAVE_CURRENT_HOME_PAGE_NUM](state: any, currentHomePageNum: number) {
     state.currentHomePageNum = currentHomePageNum

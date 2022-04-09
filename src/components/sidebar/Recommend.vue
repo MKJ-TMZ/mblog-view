@@ -6,7 +6,7 @@ import * as moment from "moment";
 const router = useRouter()
 const store = useStore()
 const props = defineProps({
-  randomBlogList: {
+  recommendBlogList: {
     type: Array,
     required: true
   }
@@ -20,11 +20,11 @@ const toBlog = (blog: any) => {
 <template>
   <!--随机文章-->
   <div class="ui segments m-box">
-    <div class="ui secondary segment"><i class="bookmark icon"></i>随机文章</div>
+    <div class="ui secondary segment"><i class="bookmark icon"/>推荐</div>
     <div class="ui yellow segment">
       <div class="ui divided items">
-        <div class="m-item" v-for="blog in randomBlogList" :key="blog.id" @click.prevent="toBlog(blog)">
-          <div class="img" :style="{'background-image':'url(' + blog.firstPicture + ')'}"></div>
+        <div class="m-item" v-for="blog in recommendBlogList" :key="blog.id" @click.prevent="toBlog(blog)">
+          <div class="img" :style="{'background-image':'url(' + blog.coverPic + ')'}"/>
           <div class="info">
             <div class="date">{{ moment(blog.createTime).format('YYYY-MM-DD') }}</div>
             <div class="title">{{ blog.title }}</div>

@@ -8,6 +8,7 @@ import 'assets/lib/prism/prism.js';
 import { getBlogById } from "@/api/blog";
 import * as moment from "moment";
 import { isNotEmpty } from "@/utils/func";
+import { msgError } from "@/utils/message";
 
 // 使tocbot兼容ts
 const tocbot = (window as any).tocbot;
@@ -41,18 +42,28 @@ onBeforeRouteLeave((to: any, from: any, next: any) => {
 })
 
 onBeforeRouteUpdate((to: any, from: any, next: any) => {
-  store.commit(SAVE_IS_BLOG_RENDER_COMPLETE, false)
-  tocbot.destroy()
-  next()
+  if (to.path !== from.path) {
+    store.commit(SAVE_IS_BLOG_RENDER_COMPLETE, false)
+    tocbot.destroy()
+    next()
+  }
 })
 
 const getBlog = (blogId: any) => {
-  blogData.value = getBlogById(blogId)
-  document.title = blogData.value.title + ' - ' + baseSetting.value.webTitleSuffix
-  nextTick(() => {
-    // 解决异步高亮失效问题
-    Prism.highlightAll()
-    store.commit(SAVE_IS_BLOG_RENDER_COMPLETE, true)
+  getBlogById(blogId).then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      blogData.value = data
+      document.title = blogData.value.title + ' - ' + baseSetting.value.webTitleSuffix
+      nextTick(() => {
+        // 解决异步高亮失效问题
+        Prism.highlightAll()
+        store.commit(SAVE_IS_BLOG_RENDER_COMPLETE, true)
+      })
+    }
+  }).catch((error: any) => {
+    msgError('获取详情失败')
+    console.log(error.msg)
   })
 }
 
@@ -64,7 +75,7 @@ const changeFocusMode = () => {
 <template>
   <div>
     <div class="ui padded attached segment m-padded-tb-large">
-      <div class="ui large red right corner label" v-if="blogData.top">
+      <div class="ui large red right corner label" v-if="blogData.isTop">
         <i class="arrow alternate circle up icon"></i>
       </div>
       <div class="ui middle aligned mobile reversed stackable">
@@ -80,10 +91,10 @@ const changeFocusMode = () => {
                 <i class="small calendar icon"></i><span>{{ moment(blogData.createTime).format('YYYY-MM-DD') }}</span>
               </div>
               <div class="item m-views">
-                <i class="small eye icon"></i><span>{{ blogData.views }}</span>
+                <i class="small eye icon"></i><span>{{ blogData.viewCount }}</span>
               </div>
               <div class="item m-common-black">
-                <i class="small pencil alternate icon"></i><span>字数≈{{ blogData.words }}字</span>
+                <i class="small pencil alternate icon"></i><span>字数≈{{ blogData.wordsCount }}字</span>
               </div>
               <div class="item m-common-black">
                 <i class="small clock icon"></i><span>阅读时长≈{{ blogData.readTime }}分</span>
@@ -97,11 +108,11 @@ const changeFocusMode = () => {
           </div>
           <!--分类-->
           <router-link
-              :to="`/category/${blogData.category.name}`"
+              :to="`/category/${blogData.categoryId}`"
               class="ui orange large ribbon label"
-              v-if="blogData.category"
+              v-if="blogData.categoryId"
           >
-            <i class="small folder open icon"></i><span class="m-text">{{ blogData.category.name }}</span>
+            <i class="small folder open icon"/><span class="m-text">{{ blogData.categoryName }}</span>
           </router-link>
           <!--文章Markdown正文-->
           <div
@@ -111,7 +122,7 @@ const changeFocusMode = () => {
           />
           <!--赞赏-->
           <div style="margin: 2em auto">
-            <el-popover placement="top" width="220" trigger="click" v-if="blogData.appreciation">
+            <el-popover placement="top" width="220" trigger="click" v-if="blogData.isAppreciation">
               <template #reference>
                 <span>
                   <el-button color="#f2711c" style="color: white;" round>赞赏</el-button>
@@ -138,8 +149,8 @@ const changeFocusMode = () => {
                   :to="`/tag/${tag.name}`"
                   class="ui tag label m-text-500 m-margin-small"
                   :class="tag.color"
-                  v-for="(tag,index) in blogData.tags"
-                  :key="index"
+                  v-for="tag in blogData.tagList"
+                  :key="tag.id"
               >
                 {{ tag.name }}
               </router-link>

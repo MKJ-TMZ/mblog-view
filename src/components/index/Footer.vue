@@ -1,25 +1,17 @@
 <script lang="ts" setup>
 import { useStore } from "vuex";
+import { computed } from "_vue@3.2.31@vue";
 
 const store = useStore()
 const props = defineProps({
-  baseSetting: {
-    type: Object,
-    required: true
-  },
-  badges: {
-    type: Array,
-    required: true
-  },
-  newBlogList: {
-    type: Array,
-    required: true
-  },
   hitokoto: {
     type: Object,
     required: true
   }
 })
+
+const baseSetting = computed(() => store.state.baseSetting)
+const footerSetting = computed(() => store.state.footerSetting)
 
 const toBlog = (blog: any) => {
   store.dispatch('goBlogPage', blog)
@@ -43,7 +35,13 @@ const toBlog = (blog: any) => {
         <div class="six wide column">
           <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
           <div class="ui inverted link list">
-            <a href="javascript:" @click.prevent="toBlog(item)" v-for="item in newBlogList" :key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</a>
+            <a href="javascript:"
+               @click.prevent="toBlog(item)"
+               v-for="item in footerSetting.newBlogList"
+               :key="item.id" class="item m-text-thin m-padded-tb-small"
+            >
+              {{ item.title }}
+            </a>
           </div>
         </div>
 
@@ -60,10 +58,10 @@ const toBlog = (blog: any) => {
         <router-link to="/" style="color:#ffe500" v-if="baseSetting.copyright">{{ baseSetting.webTitleSuffix }}</router-link>
       </p>
 
-      <div class="github-badge" v-for="(item, index) in badges" :key="index">
+      <div class="github-badge" v-for="(item, index) in footerSetting.badgeList" :key="index">
         <a rel="external nofollow noopener" :href="item.url" target="_blank" :title="item.title">
           <span class="badge-subject">{{ item.subject }}</span>
-          <span class="badge-value" :class="`bg-${item.color}`">{{ item.value }}</span>
+          <span class="badge-value" :class="`bg-${item.color}`">{{ item.content }}</span>
         </a>
       </div>
 

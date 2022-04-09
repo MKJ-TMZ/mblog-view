@@ -44,8 +44,8 @@ const toggle = () => {
   mobileHide.value = !mobileHide.value
 }
 
-const categoryRoute = (name: string) => {
-  router.push(`/category/${name}`)
+const categoryRoute = (id: string) => {
+  router.push(`/category/${id}`)
 }
 
 const debounceQuery = (queryString: string, callback: (queryResult: unknown) => void) => {
@@ -127,7 +127,7 @@ const handleClickListener = (e: any) => {
 				</span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item :command="category.name" v-for="(category,index) in categoryList" :key="index">
+            <el-dropdown-item :command="category.id" v-for="category in categoryList" :key="category.id">
               {{ category.name }}
             </el-dropdown-item>
           </el-dropdown-menu>

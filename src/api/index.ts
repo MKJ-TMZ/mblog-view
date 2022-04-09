@@ -12,6 +12,12 @@ export function getProfileSetting() {
   })
 }
 
+export function getFooterSetting() {
+  return request({
+    url: 'setting/footer'
+  })
+}
+
 export function getSite() {
   return {
     // siteInfo: {

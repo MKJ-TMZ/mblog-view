@@ -12,7 +12,7 @@ const props = defineProps({
   <div class="ui segments m-box">
     <div class="ui secondary segment"><i class="tags icon"></i>标签云</div>
     <div class="ui yellow segment m-padding-small">
-      <router-link :to="`/tag/${tag.name}`" class="ui label m-text" :class="tag.color" v-for="(tag,index) in tagList" :key="index">
+      <router-link :to="`/tag/${tag.id}`" class="ui label m-text" :class="tag.color" v-for="tag in tagList" :key="tag.id">
         {{ tag.name }}
       </router-link>
     </div>

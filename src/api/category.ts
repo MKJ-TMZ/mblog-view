@@ -1,3 +1,5 @@
+import request from "@/utils/request";
+
 export function getBlogListByCategoryName(categoryName: any, pageNum: number) {
   return {
     totalPage: 10,
@@ -54,4 +56,10 @@ export function getBlogListByCategoryName(categoryName: any, pageNum: number) {
       }
     ]
   }
+}
+
+export function getCategoryList() {
+  return request({
+    url: 'category/list'
+  })
 }

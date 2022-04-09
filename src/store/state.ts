@@ -26,6 +26,10 @@ const state = {
 		emailUrl: '',
 		customList: [],
 	},
+	footerSetting: {
+		badgeList: [],
+		newBlogList: []
+	},
 	// 专注模式
 	focusMode: false,
 	// 博客文章渲染完成的标记

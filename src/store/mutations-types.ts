@@ -1,6 +1,7 @@
 export const SAVE_CLIENT_SIZE = 'saveClientSize'
 export const SAVE_BASE_SETTING = 'saveBaseSetting'
 export const SAVE_PROFILE_SETTING = 'saveProfileSetting'
+export const SAVE_FOOTER_SETTING = 'saveFooterSetting'
 export const SAVE_CURRENT_HOME_PAGE_NUM = 'saveCurrentHomePageNum'
 export const SCROLL_TO_TOP = 'scrollToTop'
 export const SAVE_IS_BLOG_RENDER_COMPLETE = 'saveIsBlogRenderComplete'

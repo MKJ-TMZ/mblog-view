@@ -2,6 +2,8 @@ import axios from "axios";
 // @ts-ignore
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { isNotEmpty } from "@/utils/func";
+import { msgError } from "@/utils/message";
 
 const request = axios.create({
 	baseURL: 'http://localhost:8888/',
@@ -18,9 +20,12 @@ request.interceptors.request.use(
 
 // 响应拦截
 request.interceptors.response.use(
-	(config: any) => {
+	(res: any) => {
 		NProgress.done()
-		return config.data
+		if (res.data.code !== 200 && isNotEmpty(res.data.msg)) {
+			msgError(res.data.msg)
+		}
+		return res.data
 	}
 )
 

@@ -1,28 +1,28 @@
 <script setup lang="ts">
 import Nav from "@/components/index/Nav.vue";
 import Header from "@/components/index/Header.vue"
-import { SAVE_CLIENT_SIZE, SAVE_PROFILE_SETTING, SAVE_BASE_SETTING } from "@/store/mutations-types";
+import { SAVE_CLIENT_SIZE, SAVE_PROFILE_SETTING, SAVE_BASE_SETTING, SAVE_FOOTER_SETTING } from "@/store/mutations-types";
 import { computed, onBeforeMount, onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import { getBaseSetting, getHitokoto, getProfileSetting, getSite } from "@/api";
+import { getBaseSetting, getFooterSetting, getHitokoto, getProfileSetting, getSite } from "@/api";
 import { useRoute } from "vue-router";
 import Profile from "@/components/sidebar/Profile.vue";
-import RandomBlog from "@/components/sidebar/RandomBlog.vue";
+import Recommend from "@/components/sidebar/Recommend.vue";
 import Tags from "@/components/sidebar/Tags.vue";
 import Tocbot from "@/components/sidebar/Tocbot.vue";
 import Footer from "@/components/index/Footer.vue";
 import { msgError } from "@/utils/message";
+import { getCategoryList } from "@/api/category";
+import { getTagList } from "@/api/tag";
+import { getRecommendList } from "@/api/blog";
 
 const route = useRoute()
 const store = useStore()
 
 const categoryList =  ref<any[]>([])
-const baseSetting = computed(() => store.state.baseSetting)
-const randomBlogList = ref<any[]>([])
+const recommendBlogList = ref<any[]>([])
 const focusMode = computed(() => store.state.focusMode)
 const tagList = ref<any[]>([])
-const badges = ref<any[]>([])
-const newBlogList = ref<any[]>([])
 const hitokoto = ref<any>({})
 
 onBeforeMount(() => {
@@ -66,14 +66,52 @@ const initSite = () => {
     console.log(error.msg)
   })
 
+  // 获取页脚设置
+  getFooterSetting().then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      store.commit(SAVE_FOOTER_SETTING, data)
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
+
+  // 获取所有分类
+  getCategoryList().then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      categoryList.value = data
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
+
+  // 获取所有标签
+  getTagList().then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      tagList.value = data
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
+
+  // 获取推荐
+  getRecommendList().then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      recommendBlogList.value = data
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
 
   // TODO
   const data = getSite()
-  categoryList.value = data.categoryList
-  randomBlogList.value = data.randomBlogList
-  tagList.value = data.tagList
-  badges.value = data.badges
-  newBlogList.value = data.newBlogList
 }
 
   //获取一言
@@ -100,16 +138,21 @@ const initSite = () => {
             <div class="three wide column m-mobile-hide">
               <Profile :class="{'m-display-none': focusMode}"/>
             </div>
-            <!--中间-->
+            <!--主体-->
             <div class="ten wide column">
               <router-view/>
             </div>
             <!--右侧-->
             <div class="three wide column m-mobile-hide">
-              <RandomBlog :randomBlogList="randomBlogList" :class="{'m-display-none': focusMode}"/>
-              <Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
-              <!--只在文章页面显示目录-->
-              <Tocbot v-if="route.name==='blog'"/>
+              <el-affix v-if="route.name==='blog'" target=".main" :offset="68">
+                <Recommend :recommendBlogList="recommendBlogList" :class="{'m-display-none': focusMode}"/>
+                <Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
+                <Tocbot/>
+              </el-affix>
+              <div v-else>
+                <Recommend :recommendBlogList="recommendBlogList" :class="{'m-display-none': focusMode}"/>
+                <Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
+              </div>
             </div>
           </div>
         </div>
@@ -122,7 +165,7 @@ const initSite = () => {
     </el-backtop>
 
     <!--底部-->
-    <Footer :baseSetting="baseSetting" :badges="badges" :newBlogList="newBlogList" :hitokoto="hitokoto"/>
+    <Footer :hitokoto="hitokoto"/>
   </div>
 </template>
 
