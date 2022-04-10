@@ -11,18 +11,14 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  totalPage: {
+  total: {
     type: Number,
     required: true
   },
   currentPageNum: {
     type: Number,
     required: true
-  },
-  handlePageNumChange: {
-    type: Function,
-    required: true
-  },
+  }
 })
 </script>
 
@@ -31,7 +27,7 @@ const props = defineProps({
     <!--content-->
     <BlogItem :blogList="blogList" v-viewer/>
     <!--分页-->
-    <Pagination :getBlogList="getBlogList" :totalPage="totalPage" :handlePageNumChange="handlePageNumChange" :currentPageNum="currentPageNum"/>
+    <Pagination :getBlogList="getBlogList" :total="total" :currentPageNum="currentPageNum"/>
   </div>
 </template>
 

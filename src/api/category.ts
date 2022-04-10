@@ -63,3 +63,9 @@ export function getCategoryList() {
     url: 'category/list'
   })
 }
+
+export function getCategoryName(id: string) {
+  return request({
+    url: `category/${id}`
+  })
+}

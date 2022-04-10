@@ -5,3 +5,9 @@ export function getTagList() {
     url: 'tag/list'
   })
 }
+
+export function getTag(id: string) {
+  return request({
+    url: `tag/${id}`
+  })
+}

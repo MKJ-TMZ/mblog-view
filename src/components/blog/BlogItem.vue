@@ -18,7 +18,7 @@ const toBlog = (blog: any) => {
 <template>
   <div>
     <div class="ui padded attached segment m-padded-tb-large m-margin-bottom-big m-box" v-for="item in blogList" :key="item.id">
-      <div class="ui large red right corner label" v-if="item.top">
+      <div class="ui large red right corner label" v-if="item.isTop">
         <i class="arrow alternate circle up icon"></i>
       </div>
       <div class="ui middle aligned mobile reversed stackable">
@@ -36,10 +36,10 @@ const toBlog = (blog: any) => {
                 <i class="small calendar icon"></i><span>{{ moment(item.createTime).format('YYYY-MM-DD') }}</span>
               </div>
               <div class="item m-views">
-                <i class="small eye icon"></i><span>{{ item.views }}</span>
+                <i class="small eye icon"></i><span>{{ item.viewCount }}</span>
               </div>
               <div class="item m-common-black">
-                <i class="small pencil alternate icon"></i><span>字数≈{{ item.words }}字</span>
+                <i class="small pencil alternate icon"></i><span>字数≈{{ item.wordsCount }}字</span>
               </div>
               <div class="item m-common-black">
                 <i class="small clock icon"></i><span>阅读时长≈{{ item.readTime }}分</span>
@@ -47,11 +47,12 @@ const toBlog = (blog: any) => {
             </div>
           </div>
           <!--分类-->
-          <router-link :to="`/category/${item.category.name}`" class="ui orange large ribbon label">
-            <i class="small folder open icon"></i><span class="m-text">{{ item.category.name }}</span>
+          <router-link :to="`/category/${item.categoryId}`" class="ui orange large ribbon label">
+            <i class="small folder open icon"/><span class="m-text">{{ item.categoryName }}</span>
           </router-link>
           <!--文章Markdown描述-->
-          <div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces m-scale-up-mini" v-html="item.description"></div>
+          <div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces m-scale-up-mini"
+               v-html="item.description"/>
           <!--阅读全文按钮-->
           <div class="row m-padded-tb-small m-margin-top">
             <a href="javascript:" @click.prevent="toBlog(item)" class="color-btn">阅读全文</a>
@@ -61,7 +62,15 @@ const toBlog = (blog: any) => {
           <!--标签-->
           <div class="row m-padded-tb-no">
             <div class="column m-padding-left-no">
-              <router-link :to="`/tag/${tag.name}`" class="ui tag label m-text m-margin-small" :class="tag.color" v-for="(tag,index) in item.tags" :key="index">{{ tag.name }}</router-link>
+              <router-link
+                  v-for="(tag,index) in item.tagList"
+                  class="ui tag label m-text m-margin-small"
+                  :to="`/tag/${tag.id}`"
+                  :class="tag.color"
+                  :key="index"
+              >
+                {{ tag.name }}
+              </router-link>
             </div>
           </div>
         </div>

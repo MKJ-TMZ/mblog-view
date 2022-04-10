@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useStore } from "vuex";
-import { computed } from "_vue@3.2.31@vue";
+import { computed, ref } from "vue";
+import QrcodeVue from 'qrcode.vue'
+import { onBeforeRouteUpdate } from "vue-router";
 
 const store = useStore()
 const props = defineProps({
@@ -12,6 +14,13 @@ const props = defineProps({
 
 const baseSetting = computed(() => store.state.baseSetting)
 const footerSetting = computed(() => store.state.footerSetting)
+const fullPath = ref<string>(window.location.href);
+
+onBeforeRouteUpdate((to: any, from: any, next: any) => {
+  fullPath.value = window.location.host + to.fullPath
+  next()
+})
+
 
 const toBlog = (blog: any) => {
   store.dispatch('goBlogPage', blog)
@@ -27,7 +36,7 @@ const toBlog = (blog: any) => {
           <div class="ui link list">
             <h4 class="ui inverted header m-text-thin m-text-spaced">手机看本站</h4>
             <div class="item">
-              <img src="/img/qr.png" class="ui rounded image" alt="" style="width: 100px">
+              <qrcode-vue class="ui rounded image" :value="fullPath" :size="100" :margin="3" level="H" />
             </div>
           </div>
         </div>
@@ -64,7 +73,6 @@ const toBlog = (blog: any) => {
           <span class="badge-value" :class="`bg-${item.color}`">{{ item.content }}</span>
         </a>
       </div>
-
     </div>
   </footer>
 </template>

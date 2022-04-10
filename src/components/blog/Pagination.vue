@@ -11,18 +11,14 @@ const props = defineProps({
     type: Function,
     required: true
   },
-  totalPage: {
+  total: {
     type: Number,
     required: true
   },
   currentPageNum: {
     type: Number,
     required: true
-  },
-  handlePageNumChange: {
-    type: Function,
-    required: true
-  },
+  }
 })
 
 const clientSize: any = computed(() => store.state.clientSize)
@@ -36,7 +32,6 @@ const handleCurrentChange = (newPage: number) => {
     store.commit(SCROLL_TO_TOP)
   }
   getBlogList(newPage)
-  props.handlePageNumChange(newPage)
 }
 </script>
 
@@ -45,7 +40,8 @@ const handleCurrentChange = (newPage: number) => {
     <el-pagination
         @current-change="handleCurrentChange"
         :current-page="currentPageNum"
-        :page-count="totalPage"
+        :total="total"
+        :page-size="10"
         layout="prev, pager, next"
         background
         hide-on-single-page

@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import { onBeforeMount, ref, watch, computed, nextTick } from "vue";
+import { computed, nextTick, onBeforeMount, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import 'assets/lib/prism/prism.js';
 import BlogList from "@/components/blog/BlogList.vue";
-import { SAVE_CURRENT_CATEGORY_PAGE_NUM } from "@/store/mutations-types";
-import { getBlogListByCategoryName } from "@/api/category";
+import { SAVE_CURRENT_CATEGORY_PAGE_NUM, SAVE_CURRENT_HOME_PAGE_NUM } from "@/store/mutations-types";
+import { getCategoryName } from "@/api/category";
+import { getBlogList } from "@/api/home";
+import { msgError } from "@/utils/message";
 
 // 使Prism兼容ts
 const Prism = (window as any).Prism;
@@ -13,28 +15,52 @@ const route = useRoute()
 const store = useStore()
 
 const blogList = ref<any[]>([])
-const totalPage = ref<number>(1)
+const total = ref<number>(1)
+const categoryName = ref<string>('');
 const currentPageNum = computed(() => store.state.currentCategoryPageNum)
 
 onBeforeMount(() => {
-  initBlogList(route.params.name, currentPageNum.value)
+  initBlogList(currentPageNum.value)
+  initCategory()
 })
-
 
 watch(
     () => route.params,
     () => {
-      initBlogList(route.params.name, currentPageNum.value)
+      initBlogList(currentPageNum.value)
+      initCategory()
     }
 )
+const initCategory = () => {
+  if (route.params.id) {
+    getCategoryName(route.params.id as string).then((res: any) => {
+      if (res.code === 200) {
+        const { data } = res
+        categoryName.value = data;
+        console.log(data)
+      }
+    }).catch((error: any) => {
+      msgError('请求失败')
+      console.log(error.msg)
+    })
+  }
+}
 
-const initBlogList = (categoryName: any, pageNum: number) => {
-  const data = getBlogListByCategoryName(categoryName, pageNum)
-  blogList.value = data.list
-  totalPage.value = data.totalPage
-  nextTick(() => {
-    // 解决异步高亮失效问题
-    Prism.highlightAll()
+const initBlogList = (pageNum: number) => {
+  getBlogList(pageNum, { categoryId: route.params.id }).then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      blogList.value = data.records
+      total.value = data.total
+      store.commit(SAVE_CURRENT_HOME_PAGE_NUM, data.current)
+      nextTick(() => {
+        // 解决异步高亮失效问题
+        Prism.highlightAll()
+      })
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
   })
 }
 
@@ -46,9 +72,9 @@ const handlePageNumChange = (pageNum: number) => {
 <template>
   <div>
     <div class="ui top segment" style="text-align: center">
-      <h2 class="m-text">分类 <span class="m-blue">{{ route.params.name }}</span> 下的文章</h2>
+      <h2 class="m-text">分类 <span class="m-blue">{{ categoryName }}</span> 下的文章</h2>
     </div>
-    <BlogList :getBlogList="initBlogList" :blogList="blogList" :totalPage="totalPage" :handlePageNumChange="handlePageNumChange" :currentPageNum="currentPageNum" />
+    <BlogList :getBlogList="initBlogList" :blogList="blogList" :total="total" :handlePageNumChange="handlePageNumChange" :currentPageNum="currentPageNum" />
   </div>
 </template>
 

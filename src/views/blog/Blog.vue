@@ -82,7 +82,7 @@ const changeFocusMode = () => {
         <div class="ui grid m-margin-lr">
           <!--标题-->
           <div class="row m-padded-tb-small">
-            <h2 class="ui header m-center">{{ blogData.title }}</h2>
+            <h2 class="ui header m-center" v-html="blogData.title"/>
           </div>
           <!--文章简要信息-->
           <div class="row m-padded-tb-small">

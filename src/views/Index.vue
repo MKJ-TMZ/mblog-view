@@ -145,8 +145,6 @@ const initSite = () => {
             <!--右侧-->
             <div class="three wide column m-mobile-hide">
               <el-affix v-if="route.name==='blog'" target=".main" :offset="68">
-                <Recommend :recommendBlogList="recommendBlogList" :class="{'m-display-none': focusMode}"/>
-                <Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
                 <Tocbot/>
               </el-affix>
               <div v-else>

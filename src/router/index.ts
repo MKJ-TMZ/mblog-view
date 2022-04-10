@@ -33,7 +33,7 @@ const routes = [
         }
       },
       {
-        path: '/category/:name',
+        path: '/category/:id',
         name: 'category',
         component: () => import('@/views/category/Category.vue'),
         meta: {
@@ -41,7 +41,7 @@ const routes = [
         }
       },
       {
-        path: '/tag/:name',
+        path: '/tag/:id',
         name: 'tag',
         component: () => import('@/views/tag/Tag.vue'),
         meta: {
