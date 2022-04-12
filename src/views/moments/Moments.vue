@@ -5,23 +5,33 @@ import { useStore } from "vuex";
 import { ElNotification } from "element-plus";
 import { SCROLL_TO_TOP } from "@/store/mutations-types";
 import { dateFromNow } from '@/utils/momentUtil'
+import { msgError, msgSuccess } from "@/utils/message";
 
 const store = useStore()
 
 const likeMomentIds =
     ref<any[]>(JSON.parse(window.localStorage.getItem('likeMomentIds') || '[]'))
 const momentList = ref<any[]>([])
-const currentPageNum = ref<number>(1)
-const totalPage = ref<number>(0)
+const current = ref<number>(1)
+const total = ref<number>(0)
 
 onBeforeMount(() => {
   getMomentList()
 })
 
 const getMomentList = () => {
-  const data = getMomentListData(currentPageNum.value)
-  momentList.value = data.list
-  totalPage.value = data.totalPage
+  getMomentListData(current.value).then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      momentList.value = data.records
+      total.value = data.total
+      console.log(total.value)
+      current.value = data.current
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
 }
 
 const isLike = (id: number): boolean => {
@@ -30,7 +40,7 @@ const isLike = (id: number): boolean => {
 
 const handlePageNumChange = (pageNum: number) => {
   store.commit(SCROLL_TO_TOP)
-  currentPageNum.value = pageNum
+  current.value = pageNum
   getMomentList()
 }
 
@@ -42,18 +52,22 @@ const handleLike = (id: number) => {
     })
     return
   }
-  likeMoment(id)
-  ElNotification({
-    message: '点赞成功',
-    type: 'success',
-  })
-  likeMomentIds.value.push(id)
-  window.localStorage.setItem('likeMomentIds', JSON.stringify(likeMomentIds.value))
-  momentList.value.map(moment => {
-    if (moment.id === id) {
-      return moment.likeNum++
+  likeMoment(id).then((res: any) => {
+    if (res.code === 200) {
+      msgSuccess('点赞成功')
+      likeMomentIds.value.push(id)
+      window.localStorage.setItem('likeMomentIds', JSON.stringify(likeMomentIds.value))
+      momentList.value.map(moment => {
+        if (moment.id === id) {
+          return moment.likeCount++
+        }
+      })
     }
+  }).catch((error: any) => {
+    msgError('点赞失败')
+    console.log(error)
   })
+
 }
 </script>
 
@@ -73,10 +87,10 @@ const handleLike = (id: number) => {
               <span style="font-weight: 700">{{ store.state.profileSetting.nickname }}</span>
               <span class="right floated">{{ dateFromNow(moment.createTime) }}</span>
             </div>
-            <div class="content typo" :class="{privacy: !moment.published}" v-viewer v-html="moment.content"></div>
+            <div class="content typo" :class="{privacy: !moment.isCopyable}" v-viewer v-html="moment.content"/>
             <div class="extra content">
               <a class="left floated" @click="handleLike(moment.id)">
-                <i class="heart icon" :class="isLike(moment.id)?'like-color':'outline'"></i>{{ moment.likeNum }}
+                <i class="heart icon" :class="isLike(moment.id)?'like-color':'outline'"/>{{ moment.likeCount }}
               </a>
             </div>
           </div>
@@ -85,8 +99,8 @@ const handleLike = (id: number) => {
       <div class="ui bottom pagination-wrap">
         <el-pagination
             @current-change="handlePageNumChange"
-            :current-page="currentPageNum"
-            :page-count="totalPage"
+            :current-page="current"
+            :total="total"
             layout="prev, pager, next"
             class="pagination"
             background
@@ -192,5 +206,9 @@ const handleLike = (id: number) => {
 
 .privacy {
   background: repeating-linear-gradient(145deg, #f2f2f2, #f2f2f2 15px, #fff 0, #fff 30px) !important;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

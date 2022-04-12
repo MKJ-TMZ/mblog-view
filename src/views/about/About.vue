@@ -2,6 +2,7 @@
 
 import { onBeforeMount, ref } from "vue";
 import { getAboutData } from "@/api/about";
+import { msgError } from "@/utils/message";
 
 const about = ref<any>({})
 
@@ -10,7 +11,14 @@ onBeforeMount(() => {
 })
 
 const getAbout = () => {
-  about.value = getAboutData()
+  getAboutData().then((res: any) => {
+    if (res.code === 200) {
+      about.value = res.data
+    }
+  }).catch((error: any) => {
+    msgError('获取')
+    console.log(error)
+  })
 }
 </script>
 
