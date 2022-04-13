@@ -3,6 +3,7 @@ import { useStore } from 'vuex'
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getSearchBlogList } from "@/api/blog";
+import { isEmpty } from "@/utils/func";
 
 const route = useRoute()
 const router = useRouter()
@@ -54,25 +55,20 @@ const debounceQuery = (queryString: string, callback: (queryResult: unknown) => 
 }
 
 const querySearchAsync = (queryString: string, callback: (queryResult: unknown) => void) => {
-  if (queryString === null
-      || queryString.trim() === ''
-      || queryString.indexOf('%') !== -1
-      || queryString.indexOf('_') !== -1
-      || queryString.indexOf('[') !== -1
-      || queryString.indexOf('#') !== -1
-      || queryString.indexOf('*') !== -1
-      || queryString.trim().length > 20) {
+  if (queryString.trim() == '') {
     return
   }
+  getSearchBlogList(queryString).then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      queryResult.value = data
+      if (data.length === 0) {
+        queryResult.value = [{id: null, title: '无相关搜索结果', description: ''}]
+      }
 
-  // TODO
-  const searchBlogList = getSearchBlogList(queryString)
-  queryResult.value = searchBlogList
-  if (searchBlogList.length === 0) {
-    queryResult.value = [{id: -1, title: '无相关搜索结果', content: ''}]
-  }
-
-  callback(queryResult.value)
+      callback(queryResult.value)
+    }
+  })
 }
 
 const handleSelect = (item: { id: number }) => {
@@ -162,7 +158,7 @@ const handleClickListener = (e: any) => {
         </template>
         <template #default="{ item }">
           <div class="title">{{ item.title }}</div>
-          <span class="content">{{ item.content }}</span>
+          <span class="content" v-html="item.description"/>
         </template>
       </el-autocomplete>
       <button class="ui menu black icon button m-right-top m-mobile-show" @click="toggle">

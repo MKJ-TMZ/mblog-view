@@ -24,9 +24,13 @@ onBeforeMount(() => {
 })
 
 const getFriends = () => {
-  const data = getFriendsData()
-  friendList.value = data.friendList
-  info.value = data.friendInfo
+  getFriendsData().then((res: any) => {
+    if (res.code === 200) {
+      const { data } = res
+      friendList.value = data.friendsList
+      info.value = data.friendsInfo
+    }
+  })
 }
 
 const addViews = (nickName: string) => {
@@ -63,9 +67,9 @@ const randomRGB = () => {
       <div class="typo content" v-viewer v-html="info.content"></div>
     </div>
     <!--评论-->
-    <div class="ui bottom teal attached segment threaded comments">
-      <h3 class="ui header">评论已关闭</h3>
-    </div>
+<!--    <div class="ui bottom teal attached segment threaded comments">-->
+<!--      <h3 class="ui header">评论已关闭</h3>-->
+<!--    </div>-->
   </div>
 </template>
 

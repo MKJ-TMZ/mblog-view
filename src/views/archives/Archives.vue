@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from "vue";
-import { getArchivesData } from "@/api/archives";
+import { getArchivesData, getCount } from "@/api/archives";
 import { useStore } from "vuex";
 import * as moment from "moment";
+import { msgError } from "@/utils/message";
 
 const store = useStore()
 
@@ -21,9 +22,23 @@ onBeforeMount(() => {
 })
 
 const getArchives = () => {
-  const data = getArchivesData()
-  blogsList.value = data.blogsList
-  count.value = data.count
+  getArchivesData().then((res: any) => {
+    if (res.code === 200) {
+      blogsList.value = res.data
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
+
+  getCount().then((res: any) => {
+    if (res.code === 200) {
+      count.value = res.data
+    }
+  }).catch((error: any) => {
+    msgError('请求失败')
+    console.log(error.msg)
+  })
 }
 
 const toBlog = (blog: any) => {
@@ -41,11 +56,13 @@ const toBlog = (blog: any) => {
       <div class="timeline">
         <div :class="labelColors[index%5]" v-for="(group, index) in blogsList" :key="index">
           <div class="tl-header">
-            <a class="ui large label m-text">{{ moment(group.date).format('YYYY年MM月') }}</a>
+            <a class="ui large label m-text">
+              {{ group.yearMonth.toString().substring(0, 4) }}年{{ group.yearMonth.toString().substring(4) }}月
+            </a>
           </div>
-          <div class="tl-item" v-for="blog in group.blog" :key="blog.id">
+          <div class="tl-item" v-for="blog in group.group" :key="blog.id">
             <div class="tl-wrap">
-              <span class="tl-date">{{ blog.day }}日</span>
+              <span class="tl-date">{{ moment(blog.createTime).format('DD') }}日</span>
               <a href="javascript:" @click.prevent="toBlog(blog)">
                 <div class="ui left pointing label tl-title">{{ blog.title }}</div>
               </a>
