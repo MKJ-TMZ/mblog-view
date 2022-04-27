@@ -3,7 +3,6 @@ import { useStore } from 'vuex'
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getSearchBlogList } from "@/api/blog";
-import { isEmpty } from "@/utils/func";
 
 const route = useRoute()
 const router = useRouter()

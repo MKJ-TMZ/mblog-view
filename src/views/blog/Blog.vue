@@ -9,6 +9,7 @@ import { getBlogById } from "@/api/blog";
 import * as moment from "moment";
 import { isNotEmpty } from "@/utils/func";
 import { msgError } from "@/utils/message";
+import Comment from "@/components/comment/Comment.vue";
 
 // 使tocbot兼容ts
 const tocbot = (window as any).tocbot;
@@ -172,6 +173,8 @@ const changeFocusMode = () => {
     </div>
     <!--评论-->
     <div class="ui bottom teal attached segment threaded comments">
+<!--      <Comment :page="0" :blogId="blogId" v-if="blogData.isCommentEnabled"/>-->
+<!--      <h3 class="ui header" v-else>评论已关闭</h3>-->
     </div>
   </div>
 </template>
