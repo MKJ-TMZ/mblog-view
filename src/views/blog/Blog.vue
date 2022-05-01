@@ -129,7 +129,7 @@ const changeFocusMode = () => {
                   <el-button color="#f2711c" style="color: white;" round>赞赏</el-button>
                 </span>
               </template>
-              <div class="ui orange basic label" style="width: 100%">
+              <div class="ui orange basic label" style="width: 100%; max-width: 300px">
                 <div class="image">
                   <img
                       :src="baseSetting.rewardUrl"
