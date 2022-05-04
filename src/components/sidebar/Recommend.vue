@@ -20,7 +20,7 @@ const toBlog = (blog: any) => {
 <template>
   <!--随机文章-->
   <div class="ui segments m-box">
-    <div class="ui secondary segment"><i class="bookmark icon"/>推荐</div>
+    <div class="ui secondary segment m-none-select"><i class="bookmark icon"/>推荐</div>
     <div class="ui yellow segment">
       <div class="ui divided items">
         <div class="m-item" v-for="blog in recommendBlogList" :key="blog.id" @click.prevent="toBlog(blog)">

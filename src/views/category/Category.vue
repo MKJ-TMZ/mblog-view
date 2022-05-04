@@ -8,6 +8,7 @@ import { SAVE_CURRENT_CATEGORY_PAGE_NUM, SAVE_CURRENT_HOME_PAGE_NUM } from "@/st
 import { getCategoryName } from "@/api/category";
 import { getBlogList } from "@/api/home";
 import { msgError } from "@/utils/message";
+import { isNotEmpty } from "@/utils/func";
 
 // 使Prism兼容ts
 const Prism = (window as any).Prism;
@@ -27,8 +28,10 @@ onBeforeMount(() => {
 watch(
     () => route.params,
     () => {
-      initBlogList(currentPageNum.value)
-      initCategory()
+      if (isNotEmpty(route.params.id as string) && route.name === 'tag') {
+        initBlogList(currentPageNum.value)
+        initCategory()
+      }
     }
 )
 const initCategory = () => {
@@ -37,7 +40,6 @@ const initCategory = () => {
       if (res.code === 200) {
         const { data } = res
         categoryName.value = data;
-        console.log(data)
       }
     }).catch((error: any) => {
       msgError('请求失败')

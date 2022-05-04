@@ -8,6 +8,7 @@ import BlogList from "@/components/blog/BlogList.vue";
 import { SAVE_CURRENT_HOME_PAGE_NUM, SAVE_CURRENT_TAG_PAGE_NUM } from "@/store/mutations-types";
 import { msgError } from "@/utils/message";
 import { getTag } from "@/api/tag";
+import { isNotEmpty } from "@/utils/func";
 
 // 使Prism兼容ts
 const Prism = (window as any).Prism;
@@ -27,8 +28,11 @@ onMounted(() => {
 watch(
     () => route.params,
     () => {
-      initTag()
-      initBlogList(currentPageNum.value)
+      if (isNotEmpty(route.params.id as string) && route.name === 'category') {
+        console.log(route)
+        initTag()
+        initBlogList(currentPageNum.value)
+      }
     }
 )
 

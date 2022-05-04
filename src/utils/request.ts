@@ -6,7 +6,7 @@ import { isNotEmpty } from "@/utils/func";
 import { msgError } from "@/utils/message";
 
 const request = axios.create({
-	baseURL: 'http://localhost:8888/',
+	baseURL: 'http://192.168.21.158/',
 	timeout: 10000,
 })
 
